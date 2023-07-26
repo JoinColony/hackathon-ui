@@ -21,6 +21,9 @@ const NavMenu = () => {
       <Link to="/pool" className="text-blue-500">
         Pool Page
       </Link>
+      <Link to="/approve-pool" className="text-blue-500">
+        Approve Pool Page
+      </Link>
     </>
   );
 };
