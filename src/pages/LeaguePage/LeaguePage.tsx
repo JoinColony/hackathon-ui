@@ -1,6 +1,7 @@
 import Container from 'components/Container';
 import Metrics from 'components/Metrics';
 import ProjectItem from 'components/ProjectItem';
+import ProjectListBadge from 'components/ProjectListBadge';
 import UserCircleAvatar from 'components/UserCircleAvatar';
 
 const projects = [
@@ -80,17 +81,20 @@ const LeaguePage = () => {
             Finished League
           </h3>
           {projects.map(({ name, avatar, amount, percentage }, index) => (
-            <ProjectItem
-              key={index}
-              rank={index + 1}
-              name={name}
-              avatar={avatar}
-              isTop={index === 0}
-              primaryMetric={`$${new Intl.NumberFormat('en-US').format(
-                amount,
-              )} USD`}
-              secondaryMetric={`${percentage}%`}
-            />
+            <>
+              {index === 2 && <ProjectListBadge type="demoted" />}
+              <ProjectItem
+                key={index}
+                rank={index + 1}
+                name={name}
+                avatar={avatar}
+                isTop={index === 0}
+                primaryMetric={`$${new Intl.NumberFormat('en-US').format(
+                  amount,
+                )} USD`}
+                secondaryMetric={`${percentage}%`}
+              />
+            </>
           ))}
         </div>
       </Container>
