@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CircleComponent from 'components/UserCircleAvatar';
 import DropdownMenu from 'components/DropdownMenu';
 import { useState, useContext } from 'react';
@@ -9,7 +9,6 @@ const VotePage = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authContext = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const handleDropdownClick = () => {
     setDropdownOpen(!dropdownOpen);
