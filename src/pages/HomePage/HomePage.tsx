@@ -1,22 +1,11 @@
-import { Link } from 'react-router-dom';
+import { NavMenu } from 'components/Navbar';
 
 const HomePage = () => {
   return (
     <div>
       Home Page
       <div className="flex flex-col">
-        <Link to="/results" className="text-blue-500">
-          Results Page
-        </Link>
-        <Link to="/vote" className="text-blue-500">
-          Vote Page
-        </Link>
-        <Link to="/admin" className="text-blue-500">
-          Admin Page
-        </Link>
-        <Link to="/setup" className="text-blue-500">
-          Setup Page
-        </Link>
+        <NavMenu />
       </div>
     </div>
   );
