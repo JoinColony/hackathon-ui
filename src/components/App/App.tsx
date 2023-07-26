@@ -9,6 +9,7 @@ import Navbar from 'components/Navbar';
 import PoolPage from 'pages/PoolPage';
 import LeaguePage from 'pages/LeaguePage';
 import ApprovePoolPage from 'pages/ApprovePoolPage/ApprovePoolPage';
+import AllLeaguesPage from 'pages/AllLeaguesPage/AllLeaguesPage';
 
 const App = () => (
   <AuthProvider>
@@ -23,6 +24,7 @@ const App = () => (
         <Route path="/pool" element={<PoolPage />} />
         <Route path="/league" element={<LeaguePage />} />
         <Route path="/approve-pool" element={<ApprovePoolPage />} />
+        <Route path="/all-leagues" element={<AllLeaguesPage />} />
       </Routes>
     </Router>
   </AuthProvider>
