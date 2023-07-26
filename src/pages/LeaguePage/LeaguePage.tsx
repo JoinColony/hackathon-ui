@@ -62,7 +62,7 @@ const LeaguePage = () => {
       <Container>
         <Metrics
           metrics={[
-            { heading: 'Total projects in league', value: '10' },
+            { heading: 'Total projects getting funded', value: '10' },
             {
               heading: 'Total funding amount',
               value: (
@@ -84,7 +84,7 @@ const LeaguePage = () => {
       <Container>
         <div className="flex flex-col gap-4">
           <h3 className="text-gray-900 text-2xl font-semibold leading-[30px]">
-            Finished League
+            Project funding leaderboard
           </h3>
           {projects.map(({ name, avatar, amount, percentage }, index) => (
             <>

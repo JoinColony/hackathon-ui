@@ -1,22 +1,24 @@
-import { Tier } from './AllLeaguesPage';
+import { Project } from 'types';
 import TierItem from './TierItem';
 
 interface TiersListProps {
-  leagues: Tier[];
+  tiers: Record<number, Project[]>;
 }
 
-const TiersList = ({ leagues }: TiersListProps) => {
+<ul className="flex flex-col gap-y-4"></ul>;
+
+const TiersList = ({ tiers }: TiersListProps) => {
   return (
     <>
       <h3 className="text-2xl">Finished Leagues</h3>
       <ul className="flex flex-col gap-y-4">
-        {leagues.map(({ name, projectsCount, value }, idx) => (
+        {Object.keys(tiers).map((tier) => (
           <TierItem
-            name={name}
-            projectsCount={projectsCount}
-            value={value}
-            idx={idx + 1}
-            key={`${name} ${projectsCount} ${value}`}
+            key={tier}
+            projectsCount={tiers[Number(tier)].length}
+            value="123,456"
+            idx={Number(tier)}
+            name={`League tier ${tier}`}
           />
         ))}
       </ul>

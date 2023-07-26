@@ -71,9 +71,7 @@ const VotePage = () => {
                   </div>
                   <div className="self-stretch justify-start items-center gap-1 inline-flex">
                     <div className="grow shrink basis-0 text-gray-500 text-base font-normal leading-normal">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
+                    Use your reputation to support a project, the higher their ranking the more funding they will receive.
                     </div>
                     <div className="justify-start items-center gap-1 flex">
                       <div className="w-4 h-4 relative" />
