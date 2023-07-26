@@ -21,11 +21,5 @@ module.exports = {
         '21xl': '40px',
       },
     },
-    fontSize: {
-      xs: '12px',
-      sm: '14px',
-      '5xl': '24px',
-      base: '16px',
-    },
   },
 };
