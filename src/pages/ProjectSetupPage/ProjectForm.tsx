@@ -129,7 +129,7 @@ const ProjectForm: React.FC = () => {
     if (validateForm(formState)) {
       setIsSubmitted(true);
       await postData('projects', {
-        info: JSON.stringify(formState),
+        info: JSON.stringify({ ...formState, updates: [] }),
         owner: authContext.address,
       });
     }
