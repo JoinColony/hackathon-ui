@@ -1,5 +1,7 @@
+import { AuthContext } from 'components/AuthContext';
+import useApi from 'hooks/useApi';
 import { CheckCircle } from 'icons/CheckCircle';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 interface TextFieldProps {
   id: string;
@@ -33,11 +35,16 @@ const TextField: React.FC<TextFieldProps> = ({
   );
 };
 
-const SubmitButton: React.FC = () => {
+interface SubmitButtonProps {
+  disabled: boolean;
+}
+
+const SubmitButton: React.FC<SubmitButtonProps> = ({ disabled }) => {
   return (
     <button
       type="submit"
-      className="flex justify-center items-start px-4 py-2 space-x-2.5 bg-light-blue-400 rounded-md text-white"
+      disabled={disabled}
+      className="disabled:bg-light-gray-300 disabled:cursor-not-allowed flex justify-center items-start px-4 py-2 space-x-2.5 bg-light-blue-400 rounded-md text-white"
     >
       Submit Project
     </button>
@@ -69,15 +76,20 @@ const ProjectForm: React.FC = () => {
     projectDescription: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  const { postData } = useApi();
+  const authContext = useContext(AuthContext);
   const handleChange = (id: string) => (value: string) => {
     setFormState((prevState) => ({ ...prevState, [id]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
-    console.log(formState);
+    await postData('projects', {
+      info: JSON.stringify(formState),
+      owner: authContext.address,
+      leagueId: null,
+    });
   };
 
   const fields: { id: FieldKeys; label: string }[] = [
@@ -107,7 +119,7 @@ const ProjectForm: React.FC = () => {
 
         <div className="w-full flex justify-end">
           {!isSubmitted ? (
-            <SubmitButton />
+            <SubmitButton disabled={!authContext.loggedIn} />
           ) : (
             <div className="border flex items-center gap-x-2 w-2/3 text-left py-3 px-6 text-sm font-semibold rounded-md bg-light-green-100 border-light-green-400">
               <CheckCircle />
