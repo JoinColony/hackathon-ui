@@ -1,12 +1,12 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-import HomePage from "pages/HomePage";
-import ResultsPage from "pages/ResultsPage";
-import VotePage from "pages/VotePage";
-import AdminPage from "pages/AdminPage";
-import ProjectSetupPage from "pages/ProjectSetupPage";
+import HomePage from 'pages/HomePage';
+import ResultsPage from 'pages/ResultsPage';
+import VotePage from 'pages/VotePage';
+import AdminPage from 'pages/AdminPage';
+import ProjectSetupPage from 'pages/ProjectSetupPage';
 
-import { AuthProvider } from "components/AuthContext/AuthContext";
+import { AuthProvider } from 'components/AuthContext/AuthContext';
 
 const App = () => (
   <AuthProvider>

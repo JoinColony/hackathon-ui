@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface TextFieldProps {
   id: string;
@@ -36,7 +36,7 @@ const SubmitButton: React.FC = () => {
   return (
     <button
       type="submit"
-      className="flex justify-center items-start px-4 py-2 space-x-2.5 bg-blue-400 rounded-md"
+      className="flex justify-center items-start px-4 py-2 space-x-2.5 bg-light-blue-400 rounded-md"
     >
       Submit Project
     </button>
@@ -52,20 +52,20 @@ interface FormState {
 }
 
 enum FieldKeys {
-  ProjectTitle = "projectTitle",
-  ProjectWebsite = "projectWebsite",
-  ColonyUrl = "colonyUrl",
-  ColonyAddress = "colonyAddress",
-  ProjectDescription = "projectDescription",
+  ProjectTitle = 'projectTitle',
+  ProjectWebsite = 'projectWebsite',
+  ColonyUrl = 'colonyUrl',
+  ColonyAddress = 'colonyAddress',
+  ProjectDescription = 'projectDescription',
 }
 
 const ProjectForm: React.FC = () => {
   const [formState, setFormState] = useState<FormState>({
-    projectTitle: "",
-    projectWebsite: "",
-    colonyUrl: "",
-    colonyAddress: "",
-    projectDescription: "",
+    projectTitle: '',
+    projectWebsite: '',
+    colonyUrl: '',
+    colonyAddress: '',
+    projectDescription: '',
   });
 
   const handleChange = (id: string) => (value: string) => {
@@ -78,11 +78,11 @@ const ProjectForm: React.FC = () => {
   };
 
   const fields: { id: FieldKeys; label: string }[] = [
-    { id: FieldKeys.ProjectTitle, label: "Project title" },
-    { id: FieldKeys.ProjectWebsite, label: "Project website" },
-    { id: FieldKeys.ColonyUrl, label: "Colony URL" },
-    { id: FieldKeys.ColonyAddress, label: "Colony address" },
-    { id: FieldKeys.ProjectDescription, label: "Project description" },
+    { id: FieldKeys.ProjectTitle, label: 'Project title' },
+    { id: FieldKeys.ProjectWebsite, label: 'Project website' },
+    { id: FieldKeys.ColonyUrl, label: 'Colony URL' },
+    { id: FieldKeys.ColonyAddress, label: 'Colony address' },
+    { id: FieldKeys.ProjectDescription, label: 'Project description' },
   ];
 
   return (

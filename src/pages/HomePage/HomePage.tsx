@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import LoginModal from "components/LoginModal";
+import { Link } from 'react-router-dom';
+import LoginModal from 'components/LoginModal';
 
 const HomePage = () => {
   return (

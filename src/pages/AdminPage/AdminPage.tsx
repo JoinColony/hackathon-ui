@@ -4,15 +4,15 @@ const AdminPage = () => {
   return (
     <div>
       Admin Page
-      <div className='flex flex-col'>
+      <div className="flex flex-col">
         <Link to="/" className="text-blue-500">
-           Home Page
+          Home Page
         </Link>
         <Link to="/results" className="text-blue-500">
-           Results Page
+          Results Page
         </Link>
         <Link to="/vote" className="text-blue-500">
-           Vote Page
+          Vote Page
         </Link>
       </div>
     </div>
