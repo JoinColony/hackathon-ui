@@ -7,6 +7,7 @@ import Button from 'components/Button';
 import NavLink from 'components/NavLink';
 import { useNavigate } from 'react-router-dom';
 import DropdownMenu from 'components/DropdownMenu';
+import useApi from 'hooks/useApi';
 
 const Logo = () => (
   <a href="/" className="relative leading-[30px] text-xl font-semibold">
@@ -16,8 +17,9 @@ const Logo = () => (
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const authContext = useContext(AuthContext);
+  const { logOut, profile, address, loggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const profileData = JSON.parse(profile || '{}');
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -52,7 +54,7 @@ const Navbar = () => {
   ];
 
   const handleLogout = () => {
-    authContext.logOut();
+    logOut();
   };
 
   return (
@@ -70,7 +72,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex flex-row items-center justify-start gap-4 text-center text-xs text-light-base-white">
-          {authContext.loggedIn ? (
+          {loggedIn ? (
             <>
               <div className="hidden md:block">
                 <Button
@@ -81,14 +83,14 @@ const Navbar = () => {
               <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex">
                 <div className="justify-start items-center gap-1 flex">
                   <div className="text-slate-700 text-xs font-medium leading-[18px]">
-                    8.9%
+                    {profileData?.reputationPercent || 0}%
                   </div>
                 </div>
               </div>
               <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex">
-                <ShortenedAddress address={authContext.address ?? ''} />
+                {profileData?.name ? profileData.name : <ShortenedAddress address={address ?? ''} />}
               </div>
-              <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex w-16">
+              {/* <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex w-16">
                 <div className="absolute mt-0">
                     <DropdownMenu onClick={handleDropdownClick} onStateChange={handleDropdownState} items={dropdownItems}>
                       <button type="button">
@@ -96,7 +98,7 @@ const Navbar = () => {
                       </button>
                     </DropdownMenu>
                 </div>
-              </div>
+              </div> */}
               <Button
                 variant="secondary"
                 label="Logout"

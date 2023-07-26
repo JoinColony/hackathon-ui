@@ -1,6 +1,7 @@
 import Container from 'components/Container';
 import Metrics from 'components/Metrics';
 import ProjectItem from 'components/ProjectItem';
+import ProjectListBadge from 'components/ProjectListBadge';
 
 const projects = [
   {
@@ -68,14 +69,17 @@ const PoolPage = () => {
             Projects in the pool
           </h3>
           {projects.map(({ name, percentage, votes }, index) => (
-            <ProjectItem
-              key={index}
-              name={name}
-              primaryMetric={`${votes} votes`}
-              secondaryMetric={`${percentage}% of reputation`}
-              rank={index + 1}
-              isTop={[0, 1].includes(index)}
-            />
+            <>
+              {index === 2 && <ProjectListBadge type="promoted" />}
+              <ProjectItem
+                key={index}
+                name={name}
+                primaryMetric={`${votes} votes`}
+                secondaryMetric={`${percentage}% of reputation`}
+                rank={index + 1}
+                isTop={[0, 1].includes(index)}
+              />
+            </>
           ))}
         </div>
       </Container>

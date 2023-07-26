@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { PiMedal } from 'react-icons/pi';
 
-interface StreamingWidgetProps {
+interface ProjectItemProps {
   rank: number;
   name: string;
   primaryMetric: React.ReactNode;
@@ -17,7 +17,7 @@ const ProjectItem = ({
   isTop,
   primaryMetric,
   secondaryMetric,
-}: StreamingWidgetProps) => {
+}: ProjectItemProps) => {
   return (
     <div
       className={classNames(
