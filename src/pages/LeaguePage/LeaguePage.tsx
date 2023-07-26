@@ -4,6 +4,7 @@ import Notification from 'components/Notification';
 import ProjectItem from 'components/ProjectItem';
 import ProjectListBadge from 'components/ProjectListBadge';
 import UserCircleAvatar from 'components/UserCircleAvatar';
+import { Link } from 'react-router-dom';
 
 const projects = [
   {
@@ -47,9 +48,11 @@ const LeaguePage = () => {
                 funded.
               </div>
             </div>
-            <button className="px-4 py-2.5 bg-blue-600 rounded-lg justify-center items-start gap-2.5 flex text-center text-white text-sm font-medium leading-tight">
-              Vote
-            </button>
+            <Link to="/vote">
+              <button className="px-4 py-2.5 bg-blue-600 rounded-lg justify-center items-start gap-2.5 flex text-center text-white text-sm font-medium leading-tight">
+                Vote
+              </button>
+            </Link>
           </div>
         </div>
       </Container>

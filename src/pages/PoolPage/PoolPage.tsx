@@ -2,6 +2,7 @@ import Container from 'components/Container';
 import Metrics from 'components/Metrics';
 import ProjectItem from 'components/ProjectItem';
 import ProjectListBadge from 'components/ProjectListBadge';
+import { Link } from 'react-router-dom';
 
 const projects = [
   {
@@ -41,9 +42,11 @@ const PoolPage = () => {
                 submitted.
               </div>
             </div>
-            <button className="px-4 py-2.5 bg-blue-600 rounded-lg justify-center items-start gap-2.5 flex text-center text-white text-sm font-medium leading-tight">
-              View leagues
-            </button>
+            <Link to="/league">
+              <button className="px-4 py-2.5 bg-blue-600 rounded-lg justify-center items-start gap-2.5 flex text-center text-white text-sm font-medium leading-tight">
+                View leagues
+              </button>
+            </Link>
           </div>
         </div>
       </Container>
