@@ -16,9 +16,7 @@ module.exports = {
         'light-base-black': '#000',
         'light-base-sprite': 'rgba(52, 52, 52, 0.5)',
       },
-      fontFamily: {
-        'text-small-medium': 'Inter',
-      },
+      fontFamily: 'Inter',
       borderRadius: {
         '21xl': '40px',
       },
@@ -29,8 +27,5 @@ module.exports = {
       '5xl': '24px',
       base: '16px',
     },
-  },
-  corePlugins: {
-    preflight: false,
   },
 };
