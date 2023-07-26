@@ -1,22 +1,22 @@
 import { Link } from 'react-router-dom';
 
-const HomePage = () => {
+const AdminPage = () => {
   return (
     <div>
-      Home Page
+      Admin Page
       <div className='flex flex-col'>
-      <Link to="/results" className="text-blue-500">
-          Results Page
+        <Link to="/" className="text-blue-500">
+           Home Page
+        </Link>
+        <Link to="/results" className="text-blue-500">
+           Results Page
         </Link>
         <Link to="/vote" className="text-blue-500">
            Vote Page
-        </Link>
-        <Link to="/admin" className="text-blue-500">
-           Admin Page
         </Link>
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default AdminPage;
