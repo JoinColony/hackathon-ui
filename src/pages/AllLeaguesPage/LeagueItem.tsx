@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 interface LeagueItemProps {
   name: string;
   projectsCount: number;
@@ -29,9 +31,12 @@ const LeagueItem = ({
           {curr}
           {value}
         </div>
-        <button className="border border-light-gray-200 py-2.5 px-3.5 rounded-md text-xs group-hover:bg-light-blue-400 group-hover:text-white">
+        <Link
+          to={`/tier/${idx}`}
+          className="border border-light-gray-200 py-2.5 px-3.5 rounded-md text-xs group-hover:bg-light-blue-400 group-hover:text-white"
+        >
           View League
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -1,15 +1,39 @@
 import TitleContainer from 'components/TitleContainer/TitleContainer';
 import LeagueItem from './LeagueItem';
 import Container from 'components/Container/Container';
+import useApi from 'hooks/useApi';
+import { useEffect, useState } from 'react';
+import { Project } from 'types';
 
-const leagues = [
-  { name: 'League tier 1', projectsCount: 10, value: '100,000' },
-  { name: 'League tier 2', projectsCount: 20, value: '100,000' },
-  { name: 'League tier 3', projectsCount: 40, value: '100,000' },
-  { name: 'League tier 4', projectsCount: 80, value: '100,000' },
-];
+// league tier is floored log2 of leagueId, plus 1
+const getLeagueTier = (leagueId: number) => Math.floor(Math.log2(leagueId)) + 1;
 
 const AllLeaguesPage = () => {
+  const { getData } = useApi();
+
+  const [tiers, setTiers] = useState<Record<number, Project[]>>([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const projects = await getData('projects');
+
+      // Map between league tier and projects
+      const tiers: Record<number, Project> = {};
+      projects.forEach((project: Project) => {
+        const tier = getLeagueTier(project.leagueId);
+        if (!tiers[tier]) {
+          tiers[tier] = [project];
+        } else {
+          tiers[tier].push(project);
+        }
+      });
+
+      setTiers(tiers);
+    };
+
+    fetchProjects();
+  }, [getData]);
+
   return (
     <div>
       <TitleContainer
@@ -21,13 +45,13 @@ const AllLeaguesPage = () => {
         <div className="px-8 flex flex-col gap-y-4">
           <h3 className="text-2xl">Finished Leagues</h3>
           <ul className="flex flex-col gap-y-4">
-            {leagues.map(({ name, projectsCount, value }, idx) => (
+            {Object.keys(tiers).map((tier) => (
               <LeagueItem
-                name={name}
-                projectsCount={projectsCount}
-                value={value}
-                idx={idx + 1}
-                key={`${name} ${projectsCount} ${value}`}
+                key={tier}
+                projectsCount={tiers[Number(tier)].length}
+                value="123,456"
+                idx={Number(tier)}
+                name={`League tier ${tier}`}
               />
             ))}
           </ul>
