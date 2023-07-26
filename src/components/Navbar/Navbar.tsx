@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import { AuthContext } from 'components/AuthContext';
 import LoginModal from 'components/LoginModal';
@@ -6,6 +6,8 @@ import ShortenedAddress from 'components/ShortenedAddress';
 import Button from 'components/Button';
 import NavLink from 'components/NavLink';
 import { useNavigate } from 'react-router-dom';
+import DropdownMenu from 'components/DropdownMenu';
+import useApi from 'hooks/useApi';
 
 const Logo = () => (
   <a href="/" className="relative leading-[30px] text-xl font-semibold">
@@ -15,12 +17,61 @@ const Logo = () => (
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [apiData, setApiData] = useState<any>(null);
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
+  const {
+    getData,
+    // postData,
+  } = useApi();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getData();
+      if (data) {
+        setApiData(data)
+      }
+    };
+    fetchData();
+  }, [getData, setApiData]);
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleDropdownClick = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  // handle what to do when the dropdown menu is clicked
+  const handleDropdownState = (isOpen: any) => {
+    setDropdownOpen(isOpen);
+  };
+
+  const handleDropdownItemGeneric = (event: any) => {
+    event.preventDefault();
+    event.stopPropagation();
+    alert('clicked');
+  };
+
+  const dropdownItems = [
+    {
+      name: 'Project #1',
+      handler: handleDropdownItemGeneric,
+    },
+    {
+      name: 'Project #2',
+      handler: handleDropdownItemGeneric,
+    },
+    {
+      name: 'Project #3',
+      handler: handleDropdownItemGeneric,
+    },
+  ];
 
   const handleLogout = () => {
     authContext.logOut();
   };
+
+  console.log(apiData);
 
   return (
     <div
@@ -55,9 +106,13 @@ const Navbar = () => {
               <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex">
                 <ShortenedAddress address={authContext.address ?? ''} />
               </div>
-              <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex">
-                <div className="text-slate-700 text-xs font-medium leading-[18px]">
-                  Admin
+              <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex w-16">
+                <div className="absolute mt-0">
+                    <DropdownMenu onClick={handleDropdownClick} onStateChange={handleDropdownState} items={dropdownItems}>
+                      <button type="button">
+                        <div className="text-slate-700 text-xs font-medium leading-[18px]">Admin</div>
+                      </button>
+                    </DropdownMenu>
                 </div>
               </div>
               <Button
