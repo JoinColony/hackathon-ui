@@ -1,212 +1,87 @@
-import { FunctionComponent } from "react";
+import { Link } from 'react-router-dom';
+import CircleComponent from 'components/UserCircleAvatar';
 
-const VotePage: FunctionComponent = () => {
+const VotePage = () => {
   return (
-    <div className="relative bg-white w-full flex flex-col items-start justify-start text-left text-5xl text-light-base-black font-text-small-medium">
-      <div className="self-stretch bg-white overflow-hidden flex flex-col items-center justify-start">
-        <div className="w-[1280px] h-[72px] flex flex-row py-0 px-8 box-border items-center justify-between">
-          <div className="flex flex-row items-center justify-start gap-[16px]">
-            <div className="relative leading-[30px] font-semibold">
-              Budgetbox
-            </div>
-            <div className="flex flex-row items-center justify-start gap-[4px] text-base text-light-gray-900">
-              <div className="rounded-md bg-gray-50 overflow-hidden flex flex-row py-2 px-3 items-center justify-start">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative leading-[24px] font-medium">
-                    Projects
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-md bg-white overflow-hidden flex flex-row py-2 px-3 items-center justify-start">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative leading-[24px] font-medium">
-                    Leaderboards
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-md bg-white overflow-hidden flex flex-row py-2 px-3 items-center justify-start">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative leading-[24px] font-medium">
-                    Admin
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row items-center justify-start gap-[16px] text-center text-xs text-white">
-            <div className="self-stretch rounded-lg bg-light-blue-400 flex flex-row py-2 px-3 items-center justify-center border-[1px] border-solid border-light-blue-400">
-              <div className="relative leading-[18px] font-medium">
-                Create new voting project
-              </div>
-            </div>
-            <div className="flex flex-row items-start justify-start">
-              <div className="rounded-md bg-white overflow-hidden flex flex-row p-2.5 items-start justify-start">
-                <img
-                  className="relative w-5 h-5 overflow-hidden shrink-0"
-                  alt=""
-                  src="/settings.svg"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col items-start justify-start">
-              <img
-                className="rounded-[200px] w-10 h-10 object-cover"
-                alt=""
-                src="/avatar@2x.png"
-              />
-            </div>
-          </div>
-        </div>
-        <img
-          className="self-stretch relative max-w-full overflow-hidden h-px shrink-0"
-          alt=""
-          src="/divider.svg"
-        />
-        <img
-          className="self-stretch relative max-w-full overflow-hidden h-px shrink-0"
-          alt=""
-          src="/divider.svg"
-        />
-      </div>
-      <div className="self-stretch rounded-tl-21xl rounded-tr-none rounded-br-none rounded-bl-21xl bg-white h-[861px] flex flex-col pt-12 px-0 pb-24 box-border items-start justify-start gap-[32px] text-[30px] text-light-gray-900">
-        <div className="self-stretch flex flex-col items-center justify-start">
-          <div className="w-[1280px] flex flex-col py-0 px-8 box-border items-start justify-start">
-            <div className="self-stretch flex flex-col items-start justify-start">
-              <div className="self-stretch flex flex-row items-start justify-start gap-[16px]">
-                <div className="w-[1216px] flex flex-col items-start justify-start gap-[4px]">
-                  <div className="self-stretch flex flex-row items-center justify-start gap-[4px]">
-                    <div className="flex-1 relative leading-[38px] font-semibold">
-                      Animal Pool
+    <div className="w-[1440px] mx-auto flex justify-center items-center">
+      <div className="w-full h-full pt-12 pb-24 bg-white rounded-tl-[40px] rounded-bl-[40px] flex-col justify-start items-start gap-8 inline-flex">
+        <form>
+          <div className="self-stretch w-full h-full flex-col justify-start items-center gap-6 flex">
+            <div className="w-full h-full px-8 flex-col justify-start items-start gap-6 flex mb-16">
+              <div className="self-stretch h-full flex-col justify-start items-start gap-5 flex">
+                <div className="self-stretch justify-start items-start gap-4 inline-flex">
+                  <div className="w-full flex-col justify-start items-start gap-1 inline-flex">
+                    <div className="self-stretch justify-start items-center gap-1 inline-flex">
+                      <div className="grow shrink basis-0 text-gray-900 text-3xl font-semibold leading-[38px]">Colony Pool</div>
+                      <Link to="#" className="text-blue-400 text-base font-semibold leading-normal">Funding Pool $100,000</Link>
                     </div>
-                    <div className="relative text-base leading-[24px] font-semibold text-light-blue-400">
-                      Funding Pool $100,000
+                    <div className="self-stretch justify-start items-center gap-1 inline-flex">
+                      <div className="grow shrink basis-0 text-gray-500 text-base font-normal leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                      <div className="justify-start items-center gap-1 flex">
+                        <div className="w-4 h-4 relative" />
+                        <Link to="#" className="text-center text-gray-900 text-xs font-medium leading-[18px] hover:text-blue-400">Funding Pool $100,000</Link>
+                      </div>
                     </div>
                   </div>
-                  <div className="self-stretch relative text-base leading-[24px] text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                  <div className="justify-start items-center gap-3 flex">
+                    <div className="rounded-lg" />
                   </div>
-                </div>
-                <div className="flex flex-row items-center justify-start gap-[12px]">
-                  <div className="rounded-lg hidden" />
-                  <div className="rounded-lg hidden" />
-                  <div className="rounded-lg" />
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="self-stretch flex flex-col items-center justify-start gap-[24px] text-5xl">
-          <div className="w-[1280px] flex flex-col py-0 px-8 box-border items-start justify-start">
-            <div className="self-stretch flex flex-row items-start justify-start gap-[24px]">
-              <div className="flex-1 flex flex-row items-start justify-start">
-                <div className="flex-1 rounded-lg bg-white overflow-hidden flex flex-row p-6 items-center justify-between border-[1px] border-solid border-light-gray-200">
-                  <div className="hidden flex-col items-start justify-start">
-                    <img
-                      className="relative w-[34px] h-[34px] overflow-hidden shrink-0"
-                      alt=""
-                      src="/coin.svg"
-                    />
-                  </div>
-                  <div className="flex-1 flex flex-col items-center justify-start gap-[24px]">
-                    <img
-                      className="relative w-[106px] h-[106px] object-cover"
-                      alt=""
-                      src="/blockie-6@2x.png"
-                    />
-                    <div className="self-stretch flex flex-col items-center justify-center gap-[16px]">
-                      <div className="self-stretch flex flex-col items-center justify-start">
-                        <div className="flex flex-row items-center justify-start">
-                          <div className="flex flex-row items-end justify-start gap-[10px]">
-                            <div className="flex flex-row items-center justify-start">
-                              <div className="relative leading-[30px] font-semibold">
-                                Rabbit
-                              </div>
-                            </div>
-                            <div className="hidden flex-row pt-0 px-0 pb-[3px] items-center justify-start gap-[4px] text-sm">
-                              <div className="relative leading-[20px] font-medium">
-                                CLNY
-                              </div>
-                              <img
-                                className="relative w-3.5 h-3.5 overflow-hidden shrink-0"
-                                alt=""
-                                src="/coin.svg"
-                              />
+          <div className="self-stretch h-full flex-col justify-start items-center gap-6 flex">
+            <div className="h-full px-8 flex-col justify-start items-start gap-6 flex">
+              <div className="self-stretch justify-start items-start gap-6 inline-flex">
+                <button type="submit" className="grow shrink basis-0 h-full p-6 bg-white rounded-lg border border-gray-200 justify-between items-center gap-6 flex hover:bg-blue-400">
+                  <div className="grow shrink basis-0 flex-col justify-start items-center gap-6 inline-flex">
+                    <div className="self-stretch h-full flex-col justify-center items-center gap-4 flex">
+                      <div className="self-stretch h-full flex-col justify-start items-center gap-4 flex">
+                        <CircleComponent name="Dog" />
+                        <div className="justify-start items-center gap-3 inline-flex">
+                          <div className="justify-start items-end gap-2.5 flex">
+                            <div className="justify-start items-center gap-1 flex">
+                              <div className="text-gray-900 text-2xl font-semibold leading-[30px]">Dog</div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="self-stretch relative text-sm leading-[20px] font-medium text-light-gray-600 text-center">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua.
-                      </div>
+                      <div className="self-stretch text-center text-slate-600 text-sm font-medium leading-tight">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="flex-1 flex flex-row items-start justify-start">
-                <div className="flex-1 rounded-lg bg-white overflow-hidden flex flex-row p-6 items-center justify-between border-[1px] border-solid border-light-gray-200">
-                  <div className="hidden flex-col items-start justify-start">
-                    <img
-                      className="relative w-[34px] h-[34px] overflow-hidden shrink-0"
-                      alt=""
-                      src="/coin.svg"
-                    />
-                  </div>
-                  <div className="flex-1 flex flex-col items-center justify-start gap-[24px]">
-                    <img
-                      className="relative w-[106px] h-[106px] object-cover"
-                      alt=""
-                      src="/blockie-61@2x.png"
-                    />
-                    <div className="self-stretch flex flex-col items-center justify-center gap-[16px]">
-                      <div className="self-stretch flex flex-col items-center justify-start">
-                        <div className="flex flex-row items-center justify-start">
-                          <div className="flex flex-row items-end justify-start gap-[10px]">
-                            <div className="flex flex-row items-center justify-start">
-                              <div className="relative leading-[30px] font-semibold">
-                                Cow
-                              </div>
-                            </div>
-                            <div className="hidden flex-row pt-0 px-0 pb-[3px] items-center justify-start gap-[4px] text-sm">
-                              <div className="relative leading-[20px] font-medium">
-                                CLNY
-                              </div>
-                              <img
-                                className="relative w-3.5 h-3.5 overflow-hidden shrink-0"
-                                alt=""
-                                src="/coin.svg"
-                              />
+                </button>
+                <button type="submit" className="grow shrink basis-0 h-full p-6 bg-white rounded-lg border border-gray-200 justify-between items-center gap-6 flex hover:bg-blue-400">
+                  <div className="grow shrink basis-0 flex-col justify-start items-center gap-6 inline-flex">
+                    <div className="self-stretch h-full flex-col justify-center items-center gap-4 flex">
+                      <div className="self-stretch h-full flex-col justify-start items-center gap-4 flex">
+                        <CircleComponent name="Cat" />
+                        <div className="justify-start items-center gap-3 inline-flex">
+                          <div className="justify-start items-end gap-2.5 flex">
+                            <div className="justify-start items-center gap-1 flex">
+                              <div className="text-gray-900 text-2xl font-semibold leading-[30px]">Cat</div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="self-stretch relative text-sm leading-[20px] font-medium text-light-gray-600 text-center">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua.
-                      </div>
+                      <div className="self-stretch text-center text-slate-600 text-sm font-medium leading-tight">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                     </div>
                   </div>
-                </div>
+                </button>
+              </div>
+            </div>
+            <div className="self-stretch justify-center items-center gap-2.5 inline-flex">
+              <div className="justify-start items-center gap-1 flex">
+                <Link to="#" className="text-center text-gray-900 text-xs font-medium leading-[18px] hover:text-blue-400">View league</Link>
+              </div>
+              <div className="px-3 py-2 bg-white rounded-lg border border-gray-300 justify-center items-center gap-2 flex hover:bg-blue-400 cursor-pointer">
+                <button type="submit" className="text-center text-slate-700 text-xs font-medium leading-[18px]">Skip choice</button>
               </div>
             </div>
           </div>
-          <div className="self-stretch flex flex-row items-center justify-center gap-[10px] text-xs text-light-gray-600">
-            <div className="relative leading-[18px]">
-              Unsure of the project?
-            </div>
-            <div className="rounded-lg bg-white flex flex-row py-2 px-3 items-center justify-center text-center text-light-gray-700 border-[1px] border-solid border-light-gray-300">
-              <div className="relative leading-[18px] font-medium">
-                Skip to the next voting option
-              </div>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
+
   );
 };
 
