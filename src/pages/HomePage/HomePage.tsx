@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
-import LoginModal from 'components/LoginModal';
 
 const HomePage = () => {
   return (
     <div>
       Home Page
-      <LoginModal onClose={() => {}} />
       <div className="flex flex-col">
         <Link to="/results" className="text-blue-500">
           Results Page
