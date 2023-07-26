@@ -1,18 +1,18 @@
 import { useState, useCallback } from 'react';
 
 // Replace 'your_api_endpoint' with the actual URL of your REST API
-const API_ENDPOINT = 'https://api.example.com/your_api_endpoint';
+const API_ENDPOINT = 'http://localhost:3001';
 
 const useApi = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getData = useCallback(async () => {
+  const getData = useCallback(async (url = '/') => {
     try {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(API_ENDPOINT, {
+      const response = await fetch(`${API_ENDPOINT}/${url}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -34,12 +34,12 @@ const useApi = () => {
     }
   }, []);
 
-  const postData = useCallback(async (data: any) => {
+  const postData = useCallback(async (url = '/', data: any) => {
     try {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(API_ENDPOINT, {
+      const response = await fetch(`${API_ENDPOINT}/${url}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

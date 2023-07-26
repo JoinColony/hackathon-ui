@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import useApi from 'hooks/useApi';
 
 interface AuthContextType {
   loggedIn: boolean;
@@ -19,6 +20,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 }) => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [address, setAddress] = useState<string | null>(null);
+  const {
+    postData,
+  } = useApi();
 
   useEffect(() => {
     const address = localStorage.getItem('address');
@@ -29,9 +33,15 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   }, []);
 
   const logIn = (address: string) => {
-    localStorage.setItem('address', address);
-    setLoggedIn(true);
-    setAddress(address);
+    const apiRequest = async () => {
+      const data = await postData('users/login', { id: address });
+      if (data && data.id === address) {
+        localStorage.setItem('address', address);
+        setLoggedIn(true);
+        setAddress(address);
+      }
+    };
+    apiRequest();
   };
 
   const logOut = () => {
