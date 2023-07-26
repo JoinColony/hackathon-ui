@@ -76,24 +76,22 @@ const LeaguePage = () => {
 
       <Container>
         <div className="flex flex-col gap-4">
-          <div className="self-stretch text-gray-900 text-2xl font-semibold leading-[30px]">
+          <h3 className="text-gray-900 text-2xl font-semibold leading-[30px]">
             Finished League
-          </div>
-          <div className="flex flex-col gap-4">
-            {projects.map(({ name, avatar, amount, percentage }, index) => (
-              <ProjectItem
-                key={index}
-                rank={index + 1}
-                name={name}
-                avatar={avatar}
-                isTop={index === 0}
-                primaryMetric={`$${new Intl.NumberFormat('en-US').format(
-                  amount,
-                )} USD`}
-                secondaryMetric={`${percentage}%`}
-              />
-            ))}
-          </div>
+          </h3>
+          {projects.map(({ name, avatar, amount, percentage }, index) => (
+            <ProjectItem
+              key={index}
+              rank={index + 1}
+              name={name}
+              avatar={avatar}
+              isTop={index === 0}
+              primaryMetric={`$${new Intl.NumberFormat('en-US').format(
+                amount,
+              )} USD`}
+              secondaryMetric={`${percentage}%`}
+            />
+          ))}
         </div>
       </Container>
     </div>
