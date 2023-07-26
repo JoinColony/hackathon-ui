@@ -5,7 +5,7 @@ interface Props {
 }
 
 const NavLink = ({ label, href, isHighlighted = false }: Props) => (
-  <a href={href} className={`rounded-md ${isHighlighted ? "bg-light-gray-50" : "bg-light-base-white"} overflow-hidden flex py-2 px-3 items-center justify-start`}>
+  <a href={href} className={`rounded-md ${isHighlighted ? "bg-gray-50" : ''} overflow-hidden flex py-2 px-3 items-center justify-start`}>
     <div className="relative leading-[24px] font-medium">
       {label}
     </div>
