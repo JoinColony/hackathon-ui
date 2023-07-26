@@ -1,5 +1,5 @@
 import Container from 'components/Container';
-import MetricItem from 'components/MetricItem';
+import Metrics from 'components/Metrics';
 import ProjectItem from 'components/ProjectItem';
 import UserCircleAvatar from 'components/UserCircleAvatar';
 
@@ -53,12 +53,12 @@ const LeaguePage = () => {
       </Container>
 
       <Container>
-        <div className="flex-col justify-start items-start gap-6 flex">
-          <div className="self-stretch justify-start items-center gap-6 inline-flex">
-            <MetricItem heading="Total projects in league" value="10" />
-            <MetricItem
-              heading="Total funding amount"
-              value={
+        <Metrics
+          metrics={[
+            { heading: 'Total projects in league', value: '10' },
+            {
+              heading: 'Total funding amount',
+              value: (
                 <>
                   <span className="text-gray-900 text-4xl font-semibold leading-[44px]">
                     $100,000{' '}
@@ -67,11 +67,11 @@ const LeaguePage = () => {
                     USD
                   </span>
                 </>
-              }
-            />
-            <MetricItem heading="Total votes" value="10" />
-          </div>
-        </div>
+              ),
+            },
+            { heading: 'Total votes', value: '10' },
+          ]}
+        />
       </Container>
 
       <Container>
