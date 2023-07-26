@@ -1,23 +1,22 @@
 import CircleComponent from 'components/UserCircleAvatar';
 
-const ProjectCard = () => {
+interface ProjectCardProps {
+  title: string;
+  subtitle: string;
+}
+
+const ProjectCard = ({ title, subtitle }: ProjectCardProps) => {
   return (
     <div className="w-488 border border-light-gray-200 p-6 rounded-md">
-      <div className="self-stretch h-full flex-col justify-start items-center gap-4 flex">
+      <div className="self-stretch flex-col justify-start items-center gap-4 flex">
         <CircleComponent name="Cat" />
-        <div className="justify-start items-center gap-3 inline-flex">
-          <div className="justify-start items-end gap-2.5 flex">
-            <div className="justify-start items-center gap-1 flex">
-              <div className="text-gray-900 text-2xl font-semibold leading-[30px]">
-                Cat
-              </div>
-            </div>
+        <div />
+        <div className="flex flex-col gap-y-4">
+          <div className="font-semibold text-2xl text-center">{title}</div>
+          <div className="self-stretch text-center text-slate-600 text-sm font-medium leading-tight">
+            {subtitle}
           </div>
         </div>
-      </div>
-      <div className="self-stretch text-center text-slate-600 text-sm font-medium leading-tight">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
       </div>
     </div>
   );

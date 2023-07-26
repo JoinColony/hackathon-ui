@@ -1,5 +1,6 @@
 import ProjectCard from 'components/ProjectCard/ProjectCard';
 import TitleContainer from 'components/TitleContainer';
+import Controls from './Controls';
 
 const ApprovePoolPage = () => {
   return (
@@ -13,8 +14,13 @@ const ApprovePoolPage = () => {
           </button>
         }
       />
-      <div className="w-full flex justify-center">
-        <ProjectCard />
+      <div className="w-full flex flex-col gap-y-6 items-center justify-center">
+        <ProjectCard
+          title="Cat"
+          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua."
+        />
+        <Controls />
       </div>
     </>
   );
