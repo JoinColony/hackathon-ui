@@ -7,9 +7,11 @@ import AdminPage from 'pages/AdminPage';
 import ProjectSetupPage from 'pages/ProjectSetupPage';
 
 import { AuthProvider } from 'components/AuthContext/AuthContext';
+import Navbar from 'components/Navbar';
 
 const App = () => (
   <AuthProvider>
+    <Navbar />
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
