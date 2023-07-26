@@ -112,15 +112,15 @@ const VotePage = () => {
             <div className="justify-start items-center gap-1 flex">
               <Link
                 to="#"
-                className="text-center text-gray-900 text-xs font-medium leading-[18px] hover:text-blue-400"
+                className="text-center text-gray-900 text-xs font-medium leading-[18px] hover:text-light-blue-400"
               >
                 View league
               </Link>
             </div>
-            <div className="px-3 py-2 bg-white rounded-lg border border-gray-300 justify-center items-center gap-2 flex hover:bg-blue-400 cursor-pointer">
+            <div className="px-3 py-2 bg-white rounded-lg border border-gray-300 hover:border-light-blue-400 justify-center items-center gap-2 flex group cursor-pointer">
               <button
                 type="submit"
-                className="text-center text-slate-700 text-xs font-medium leading-[18px]"
+                className="group-hover:text-light-blue-400 text-center text-slate-700 text-xs font-medium leading-[18px]"
                 onClick={handleVote}
               >
                 Skip choice
