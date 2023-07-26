@@ -11,8 +11,8 @@ import Navbar from 'components/Navbar';
 
 const App = () => (
   <AuthProvider>
-    <Navbar />
     <Router>
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/results" element={<ResultsPage />} />

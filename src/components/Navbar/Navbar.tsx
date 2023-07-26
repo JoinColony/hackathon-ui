@@ -5,6 +5,7 @@ import LoginModal from 'components/LoginModal';
 import ShortenedAddress from 'components/ShortenedAddress';
 import Button from 'components/Button';
 import NavLink from 'components/NavLink';
+import { useNavigate } from 'react-router-dom';
 
 const Logo: React.FC = () => (
   <a href="/" className="relative leading-[30px] text-xl font-semibold">
@@ -15,9 +16,12 @@ const Logo: React.FC = () => (
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authContext = useContext(AuthContext);
-
+  const navigate = useNavigate();
   return (
-    <div className="self-stretch bg-light-base-white overflow-hidden flex flex-col items-center justify-start z-[0] text-light-base-black border-b" style={{borderColor: '#E4E7EC'}}>
+    <div
+      className="self-stretch bg-light-base-white overflow-hidden flex flex-col items-center justify-start z-[0] text-light-base-black border-b"
+      style={{ borderColor: '#E4E7EC' }}
+    >
       <div className="w-full max-w-screen-xl h-[72px] flex flex-row py-0 px-4 md:px-8 box-border items-center justify-between">
         <div className="flex flex-row items-center justify-start gap-4">
           <Logo />
@@ -28,7 +32,7 @@ const Navbar = () => {
         </div>
         <div className="flex flex-row items-center justify-start gap-4 text-center text-xs text-light-base-white">
           <div className="hidden md:block">
-            <Button label="Add project" onClick={() => true} />
+            <Button label="Add project" onClick={() => navigate('/setup')} />
           </div>
           {authContext.loggedIn ? (
             <ShortenedAddress address={authContext.address ?? ''} />
