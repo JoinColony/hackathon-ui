@@ -1,1 +1,1 @@
-export { default } from './VotePage';
+export { default as VotePage } from './VotePage';
