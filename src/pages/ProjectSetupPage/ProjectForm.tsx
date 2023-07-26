@@ -36,7 +36,7 @@ const SubmitButton: React.FC = () => {
   return (
     <button
       type="submit"
-      className="flex justify-center items-start px-4 py-2 space-x-2.5 bg-light-blue-400 rounded-md"
+      className="flex justify-center items-start px-4 py-2 space-x-2.5 bg-light-blue-400 rounded-md text-white"
     >
       Submit Project
     </button>
