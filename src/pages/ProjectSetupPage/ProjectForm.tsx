@@ -86,23 +86,26 @@ const ProjectForm: React.FC = () => {
   ];
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col items-start space-y-8 w-full max-w-screen-xl px-8"
-    >
-      {fields.map((field) => (
-        <TextField
-          key={field.id}
-          id={field.id}
-          label={field.label}
-          value={formState[field.id]}
-          onChange={handleChange(field.id)}
-        />
-      ))}
-      <div className="w-full flex justify-end">
-        <SubmitButton />
-      </div>
-    </form>
+    <>
+      <h3 className="text-lg font-semibold">Project Overview</h3>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-start space-y-8 w-full max-w-screen-xl"
+      >
+        {fields.map((field) => (
+          <TextField
+            key={field.id}
+            id={field.id}
+            label={field.label}
+            value={formState[field.id]}
+            onChange={handleChange(field.id)}
+          />
+        ))}
+        <div className="w-full flex justify-end">
+          <SubmitButton />
+        </div>
+      </form>
+    </>
   );
 };
 
