@@ -1,11 +1,38 @@
-import Container from 'components/Container/Container';
-import MetricItem from 'components/MetricItem/MetricItem';
-import StreamingWidget from 'components/StreamingWidget/StreamingWidget';
+import Container from 'components/Container';
+import Metrics from 'components/Metrics';
+import ProjectItem from 'components/ProjectItem';
 import UserCircleAvatar from 'components/UserCircleAvatar';
+
+const projects = [
+  {
+    name: 'Dog',
+    avatar: <UserCircleAvatar name="Dog" size="small" />,
+    amount: 45110,
+    percentage: 44,
+  },
+  {
+    name: 'Cat',
+    avatar: <UserCircleAvatar name="Cat" size="small" />,
+    amount: 34110,
+    percentage: 34,
+  },
+  {
+    name: 'Rabbit',
+    avatar: <UserCircleAvatar name="Rabbit" size="small" />,
+    amount: 22098,
+    percentage: 12,
+  },
+  {
+    name: 'Horse',
+    avatar: <UserCircleAvatar name="Horse" size="small" />,
+    amount: 6756,
+    percentage: 8,
+  },
+];
 
 const LeaguePage = () => {
   return (
-    <div className="pt-12 pb-24 flex flex-col gap-5 items-stretch">
+    <div className="pt-12 pb-24 flex flex-col gap-6">
       <Container>
         <div className="flex flex-col justify-start items-start gap-6 self-stretch">
           <div className="self-stretch justify-start items-center gap-4 inline-flex">
@@ -26,12 +53,12 @@ const LeaguePage = () => {
       </Container>
 
       <Container>
-        <div className="flex-col justify-start items-start gap-6 flex">
-          <div className="self-stretch justify-start items-center gap-6 inline-flex">
-            <MetricItem heading="Total projects in league" value="10" />
-            <MetricItem
-              heading="Total funding amount"
-              value={
+        <Metrics
+          metrics={[
+            { heading: 'Total projects in league', value: '10' },
+            {
+              heading: 'Total funding amount',
+              value: (
                 <>
                   <span className="text-gray-900 text-4xl font-semibold leading-[44px]">
                     $100,000{' '}
@@ -40,49 +67,31 @@ const LeaguePage = () => {
                     USD
                   </span>
                 </>
-              }
-            />
-            <MetricItem heading="Total votes" value="10" />
-          </div>
-        </div>
+              ),
+            },
+            { heading: 'Total votes', value: '10' },
+          ]}
+        />
       </Container>
 
       <Container>
         <div className="flex flex-col gap-4">
-          <div className="self-stretch text-gray-900 text-2xl font-semibold leading-[30px]">
+          <h3 className="text-gray-900 text-2xl font-semibold leading-[30px]">
             Finished League
-          </div>
-          <div className="flex flex-col gap-4">
-            <StreamingWidget
-              rank={1}
-              name="Dog"
-              avatar={<UserCircleAvatar name="Dog" size="small" />}
-              isTop
-              amount={45110}
-              percentage={44}
+          </h3>
+          {projects.map(({ name, avatar, amount, percentage }, index) => (
+            <ProjectItem
+              key={index}
+              rank={index + 1}
+              name={name}
+              avatar={avatar}
+              isTop={index === 0}
+              primaryMetric={`$${new Intl.NumberFormat('en-US').format(
+                amount,
+              )} USD`}
+              secondaryMetric={`${percentage}%`}
             />
-            <StreamingWidget
-              rank={2}
-              name="Cat"
-              avatar={<UserCircleAvatar name="Cat" size="small" />}
-              amount={34110}
-              percentage={34}
-            />
-            <StreamingWidget
-              rank={3}
-              name="Rabbit"
-              avatar={<UserCircleAvatar name="Rabbit" size="small" />}
-              amount={22098}
-              percentage={12}
-            />
-            <StreamingWidget
-              rank={4}
-              name="Horse"
-              avatar={<UserCircleAvatar name="Horse" size="small" />}
-              amount={6756}
-              percentage={8}
-            />
-          </div>
+          ))}
         </div>
       </Container>
     </div>

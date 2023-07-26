@@ -1,9 +1,10 @@
+import { Metric } from '../types';
+
 interface MetricItemProps {
-  heading: React.ReactNode;
-  value: React.ReactNode;
+  metric: Metric;
 }
 
-const MetricItem = ({ heading, value }: MetricItemProps) => {
+const MetricItem = ({ metric: { heading, value } }: MetricItemProps) => {
   return (
     <div className="grow shrink basis-0 p-6 bg-white rounded-lg shadow border border-gray-200 flex-col justify-start items-start gap-6 inline-flex">
       <div className="self-stretch justify-start items-center gap-2 inline-flex">
