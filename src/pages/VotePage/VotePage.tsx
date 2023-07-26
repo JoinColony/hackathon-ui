@@ -11,7 +11,7 @@ const VotePage = () => {
   };
 
   // handle what to do when the dropdown menu is clicked
-  const handleDropdownState = (isOpen) => {
+  const handleDropdownState = (isOpen: any) => {
     setDropdownOpen(isOpen);
   };
 
@@ -93,7 +93,7 @@ const VotePage = () => {
                     </div>
                   </div>
                   <div className="absolute top-0 right-0 mt-2 mr-2">
-                    <DropdownMenu />
+                    <DropdownMenu onClick={handleDropdownClick} onStateChange={handleDropdownState} />
                   </div>
                 </button>
               </div>
