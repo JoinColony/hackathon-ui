@@ -1,5 +1,5 @@
-import LoginModal from 'components/LoginModal/LoginModal';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import LoginModal from "components/LoginModal";
 
 const HomePage = () => {
   return (
@@ -15,6 +15,9 @@ const HomePage = () => {
         </Link>
         <Link to="/admin" className="text-blue-500">
           Admin Page
+        </Link>
+        <Link to="/setup" className="text-blue-500">
+          Setup Page
         </Link>
       </div>
     </div>
