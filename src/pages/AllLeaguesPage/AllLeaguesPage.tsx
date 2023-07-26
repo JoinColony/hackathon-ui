@@ -37,13 +37,12 @@ const AllLeaguesPage = () => {
   return (
     <div>
       <TitleContainer
-        title="All Leagues"
-        subtitle="Lorem Ipsum"
+        title="All League Tiers"
+        subtitle="Overview of all league tiers, projects, and total available funding."
         button={null}
       />
       <Container>
         <div className="px-8 flex flex-col gap-y-4">
-          <h3 className="text-2xl">Finished Leagues</h3>
           <ul className="flex flex-col gap-y-4">
             {Object.keys(tiers).map((tier) => (
               <LeagueItem
