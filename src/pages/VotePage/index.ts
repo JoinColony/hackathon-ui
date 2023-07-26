@@ -1,1 +1,1 @@
-export { default } from './VotePage';
+export { default } from './VotePage.jsx';
