@@ -18,6 +18,9 @@ const NavMenu = () => {
       <Link to="/setup" className="text-blue-500">
         Setup Page
       </Link>
+      <Link to="/pool" className="text-blue-500">
+        Pool Page
+      </Link>
     </>
   );
 };

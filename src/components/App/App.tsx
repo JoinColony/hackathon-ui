@@ -8,6 +8,7 @@ import ProjectSetupPage from 'pages/ProjectSetupPage';
 
 import { AuthProvider } from 'components/AuthContext/AuthContext';
 import Navbar from 'components/Navbar';
+import PoolPage from 'pages/PoolPage';
 
 const App = () => (
   <AuthProvider>
@@ -19,6 +20,7 @@ const App = () => (
         <Route path="/vote" element={<VotePage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/setup" element={<ProjectSetupPage />} />
+        <Route path="/pool" element={<PoolPage />} />
       </Routes>
     </Router>
   </AuthProvider>
