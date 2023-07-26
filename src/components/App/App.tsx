@@ -10,6 +10,7 @@ import PoolPage from 'pages/PoolPage';
 import LeaguePage from 'pages/LeaguePage';
 import ApprovePoolPage from 'pages/ApprovePoolPage/ApprovePoolPage';
 import AllLeaguesPage from 'pages/AllLeaguesPage/AllLeaguesPage';
+import ProjectPage from 'pages/ProjectPage';
 
 const App = () => (
   <AuthProvider>
@@ -25,6 +26,7 @@ const App = () => (
         <Route path="/league" element={<LeaguePage />} />
         <Route path="/approve-pool" element={<ApprovePoolPage />} />
         <Route path="/all-leagues" element={<AllLeaguesPage />} />
+        <Route path="/project/:id" element={<ProjectPage />} />
       </Routes>
     </Router>
   </AuthProvider>
