@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import { AuthContext } from 'components/AuthContext';
 import LoginModal from 'components/LoginModal';
@@ -7,6 +7,7 @@ import Button from 'components/Button';
 import NavLink from 'components/NavLink';
 import { useNavigate } from 'react-router-dom';
 import DropdownMenu from 'components/DropdownMenu';
+import useApi from 'hooks/useApi';
 
 const Logo = () => (
   <a href="/" className="relative leading-[30px] text-xl font-semibold">
@@ -16,8 +17,23 @@ const Logo = () => (
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [apiData, setApiData] = useState<any>(null);
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
+  const {
+    getData,
+    // postData,
+  } = useApi();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getData();
+      if (data) {
+        setApiData(data)
+      }
+    };
+    fetchData();
+  }, [getData, setApiData]);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -54,6 +70,8 @@ const Navbar = () => {
   const handleLogout = () => {
     authContext.logOut();
   };
+
+  console.log(apiData);
 
   return (
     <div
