@@ -1,5 +1,6 @@
 import Container from 'components/Container';
 import Metrics from 'components/Metrics';
+import Notification from 'components/Notification';
 import ProjectItem from 'components/ProjectItem';
 import ProjectListBadge from 'components/ProjectListBadge';
 import UserCircleAvatar from 'components/UserCircleAvatar';
@@ -39,11 +40,11 @@ const LeaguePage = () => {
           <div className="self-stretch justify-start items-center gap-4 inline-flex">
             <div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
               <div className="self-stretch text-gray-900 text-3xl font-semibold leading-[38px]">
-                Colony League
+                League Projects
               </div>
               <div className="self-stretch text-gray-500 text-base font-normal leading-normal">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                List of all projects in all leagues that are currently getting
+                funded.
               </div>
             </div>
             <button className="px-4 py-2.5 bg-blue-600 rounded-lg justify-center items-start gap-2.5 flex text-center text-white text-sm font-medium leading-tight">
@@ -52,6 +53,8 @@ const LeaguePage = () => {
           </div>
         </div>
       </Container>
+
+      <Notification content="Your votes has been submitted. Results are available in 3d 22 hrs 34min" />
 
       <Container>
         <Metrics
