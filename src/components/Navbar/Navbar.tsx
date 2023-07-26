@@ -17,6 +17,12 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    authContext.logOut();
+  };
+
+
   return (
     <div
       className="self-stretch bg-light-base-white overflow-hidden flex flex-col items-center justify-start z-[0] text-light-base-black border-b"
@@ -32,15 +38,15 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex flex-row items-center justify-start gap-4 text-center text-xs text-light-base-white">
-          <div className="hidden md:block">
-            <Button label="Add project" onClick={() => navigate('/setup')} />
-          </div>
           {authContext.loggedIn ? (
             <>
+              <div className="hidden md:block">
+                <Button label="Add project" onClick={() => navigate('/setup')} />
+              </div>
               <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex">
                 <div className="justify-start items-center gap-1 flex">
                   <div className="text-slate-700 text-xs font-medium leading-[18px]">8.9%</div>
-                </div>      
+                </div>
               </div>
               <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex">
                 <ShortenedAddress address={authContext.address ?? ''} />
@@ -48,6 +54,7 @@ const Navbar = () => {
               <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex">
                 <div className="text-slate-700 text-xs font-medium leading-[18px]">Admin</div>
               </div>
+              <Button variant="secondary" label="Logout" onClick={() => handleLogout()} />
             </>
           ) : (
             <Button
