@@ -9,6 +9,7 @@ import { AuthProvider } from 'components/AuthContext/AuthContext';
 import Navbar from 'components/Navbar';
 import PoolPage from 'pages/PoolPage';
 import LeaguePage from 'pages/LeaguePage';
+import ProjectPage from 'pages/ProjectPage';
 
 const App = () => (
   <AuthProvider>
@@ -22,6 +23,7 @@ const App = () => (
         <Route path="/setup" element={<ProjectSetupPage />} />
         <Route path="/pool" element={<PoolPage />} />
         <Route path="/league" element={<LeaguePage />} />
+        <Route path="/project/:id" element={<ProjectPage />} />
       </Routes>
     </Router>
   </AuthProvider>
