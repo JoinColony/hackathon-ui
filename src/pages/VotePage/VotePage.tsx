@@ -1,10 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CircleComponent from 'components/UserCircleAvatar';
 import DropdownMenu from 'components/DropdownMenu';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from 'components/AuthContext';
+import LoginModal from 'components/LoginModal';
 
 const VotePage = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleDropdownClick = () => {
     setDropdownOpen(!dropdownOpen);
@@ -13,6 +18,15 @@ const VotePage = () => {
   // handle what to do when the dropdown menu is clicked
   const handleDropdownState = (isOpen: any) => {
     setDropdownOpen(isOpen);
+  };
+
+  const handleVote = (event: any) => {
+    event.preventDefault();
+    if (authContext.loggedIn) {
+      alert('voted old school');
+    } else {
+      setIsModalOpen(true);
+    }
   };
 
   return (
@@ -46,7 +60,7 @@ const VotePage = () => {
           <div className="self-stretch h-full flex-col justify-start items-center gap-6 flex">
             <div className="h-full px-8 flex-col justify-start items-start gap-6 flex">
               <div className="self-stretch justify-start items-start gap-6 inline-flex">
-                <button type="submit" className="grow shrink basis-0 h-full p-6 bg-white rounded-lg border border-gray-200 justify-between items-center gap-6 flex hover:bg-blue-400 relative">
+                <button type="submit" className="grow shrink basis-0 h-full p-6 bg-white rounded-lg border border-gray-200 justify-between items-center gap-6 flex hover:bg-blue-400 relative" onClick={handleVote}>
                   <div className="grow shrink basis-0 flex-col justify-start items-center gap-6 inline-flex">
                     <div className="self-stretch h-full flex-col justify-center items-center gap-4 flex">
                       <div className="self-stretch h-full flex-col justify-start items-center gap-4 flex">
@@ -71,7 +85,7 @@ const VotePage = () => {
                     <DropdownMenu onClick={handleDropdownClick} onStateChange={handleDropdownState} />
                   </div>
                 </button>
-                <button type="submit" className="grow shrink basis-0 h-full p-6 bg-white rounded-lg border border-gray-200 justify-between items-center gap-6 flex hover:bg-blue-400 relative">
+                <button type="submit" className="grow shrink basis-0 h-full p-6 bg-white rounded-lg border border-gray-200 justify-between items-center gap-6 flex hover:bg-blue-400 relative" onClick={handleVote}>
                   <div className="grow shrink basis-0 flex-col justify-start items-center gap-6 inline-flex">
                     <div className="self-stretch h-full flex-col justify-center items-center gap-4 flex">
                       <div className="self-stretch h-full flex-col justify-start items-center gap-4 flex">
@@ -103,14 +117,14 @@ const VotePage = () => {
                 <Link to="#" className="text-center text-gray-900 text-xs font-medium leading-[18px] hover:text-blue-400">View league</Link>
               </div>
               <div className="px-3 py-2 bg-white rounded-lg border border-gray-300 justify-center items-center gap-2 flex hover:bg-blue-400 cursor-pointer">
-                <button type="submit" className="text-center text-slate-700 text-xs font-medium leading-[18px]">Skip choice</button>
+                <button type="submit" className="text-center text-slate-700 text-xs font-medium leading-[18px]" onClick={handleVote}>Skip choice</button>
               </div>
             </div>
           </div>
         </form>
       </div>
+      {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}
     </div>
-
   );
 };
 
