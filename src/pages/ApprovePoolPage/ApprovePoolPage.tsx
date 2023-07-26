@@ -6,8 +6,8 @@ const ApprovePoolPage = () => {
   return (
     <>
       <TitleContainer
-        title="Colony Pool"
-        subtitle="Lorem Ipsum"
+        title="Promote a project"
+        subtitle="Use your reputation to support a project for promotion to the funding league."
         button={
           <button className="rounded-md bg-light-blue-400 text-white px-4 py-2.5">
             View Leaderboard
