@@ -56,7 +56,12 @@ const ProjectItem = ({
             {primaryMetric}
           </div>
         </div>
-        <div className="text-blue-600 text-sm font-medium leading-tight">
+        <div
+          className={classNames(
+            'text-sm font-medium leading-tight',
+            isTop && 'text-blue-600',
+          )}
+        >
           {secondaryMetric}
         </div>
       </div>
