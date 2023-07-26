@@ -27,6 +27,14 @@ const App = () => (
         <Route path="/approve-pool" element={<ApprovePoolPage />} />
         <Route path="/all-leagues" element={<AllLeaguesPage />} />
         <Route path="/project/:id" element={<ProjectPage />} />
+        <Route
+          path="*"
+          element={
+            <div className="w-full flex justify-center text-4xl mt-12">
+              404 - Page not found!
+            </div>
+          }
+        ></Route>
       </Routes>
     </Router>
   </AuthProvider>
