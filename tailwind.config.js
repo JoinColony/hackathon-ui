@@ -16,6 +16,8 @@ module.exports = {
         'gray-500': '#667085',
         'light-blue-100': '#EFF8FF',
         'light-blue-400': '#2962ff',
+        'light-green-100': '#ECFDF3',
+        'light-green-400': '#039855',
         'gray-50': '#f9fafb',
         'light-base-black': '#000',
         'light-base-sprite': 'rgba(52, 52, 52, 0.5)',

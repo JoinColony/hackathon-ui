@@ -1,3 +1,4 @@
+import { CheckCircle } from 'icons/CheckCircle';
 import React, { useState } from 'react';
 
 interface TextFieldProps {
@@ -67,6 +68,7 @@ const ProjectForm: React.FC = () => {
     colonyAddress: '',
     projectDescription: '',
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (id: string) => (value: string) => {
     setFormState((prevState) => ({ ...prevState, [id]: value }));
@@ -74,6 +76,7 @@ const ProjectForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitted(true);
     console.log(formState);
   };
 
@@ -101,8 +104,16 @@ const ProjectForm: React.FC = () => {
             onChange={handleChange(field.id)}
           />
         ))}
+
         <div className="w-full flex justify-end">
-          <SubmitButton />
+          {!isSubmitted ? (
+            <SubmitButton />
+          ) : (
+            <div className="border flex items-center gap-x-2 w-2/3 text-left py-3 px-6 text-sm font-semibold rounded-md bg-light-green-100 border-light-green-400">
+              <CheckCircle />
+              Your project has been submitted
+            </div>
+          )}
         </div>
       </form>
     </>
