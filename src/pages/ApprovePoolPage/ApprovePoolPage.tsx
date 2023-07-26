@@ -14,13 +14,15 @@ const ApprovePoolPage = () => {
           </button>
         }
       />
-      <div className="w-full flex flex-col gap-y-6 items-center justify-center">
-        <ProjectCard
-          title="Cat"
-          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      <div className="w-screen flex justify-center">
+        <div className="flex flex-col gap-y-6 items-center justify-center w-488 border border-light-gray-200 p-6 rounded-md">
+          <ProjectCard
+            title="Cat"
+            subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua."
-        />
-        <Controls />
+          />
+          <Controls />
+        </div>
       </div>
     </>
   );

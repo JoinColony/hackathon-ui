@@ -1,6 +1,6 @@
 const Controls = () => {
   return (
-    <div className="flex gap-x-2">
+    <div className="flex justify-center gap-x-2">
       <button className="py-2 px-3 border border-light-gray-200 rounded-md">
         Skip
       </button>

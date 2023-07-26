@@ -27,6 +27,7 @@ const AllLeaguesPage = () => {
                 projectsCount={projectsCount}
                 value={value}
                 idx={idx + 1}
+                key={`${name} ${projectsCount} ${value}`}
               />
             ))}
           </ul>
