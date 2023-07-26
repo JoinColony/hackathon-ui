@@ -4,19 +4,19 @@ import { PiMedal } from 'react-icons/pi';
 interface StreamingWidgetProps {
   rank: number;
   name: string;
-  amount: number;
-  percentage: number;
+  primaryMetric: React.ReactNode;
+  secondaryMetric: React.ReactNode;
   avatar?: React.ReactNode;
   isTop?: boolean;
 }
 
-const StreamingWidget = ({
+const ProjectItem = ({
   rank,
   name,
   avatar,
   isTop,
-  amount,
-  percentage,
+  primaryMetric,
+  secondaryMetric,
 }: StreamingWidgetProps) => {
   return (
     <div
@@ -53,15 +53,15 @@ const StreamingWidget = ({
             </div>
           )}
           <div className="text-gray-900 text-lg font-semibold leading-7">
-            ${new Intl.NumberFormat('en-US').format(amount)} USD
+            {primaryMetric}
           </div>
         </div>
         <div className="text-blue-600 text-sm font-medium leading-tight">
-          {percentage.toFixed(0)}%
+          {secondaryMetric}
         </div>
       </div>
     </div>
   );
 };
 
-export default StreamingWidget;
+export default ProjectItem;
