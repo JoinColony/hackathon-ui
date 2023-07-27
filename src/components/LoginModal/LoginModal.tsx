@@ -1,4 +1,4 @@
-import { FC, useState, useContext } from 'react';
+import { FC, useState, useContext, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { isAddress } from 'ethers';
 import { AuthContext } from '../AuthContext';
@@ -11,6 +11,17 @@ const LoginModal: FC<LoginModalProps> = ({ onClose }) => {
   const [addressInput, setAddressInput] = useState('');
   const [isValid, setIsValid] = useState(true);
   const { logIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    // @ts-ignore
+    if (window?.ethereum?.isConnected()) {
+      // @ts-ignore
+      window.ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {
+        const [account] = accounts;
+        setAddressInput(account);
+      });
+    }
+  }, [setAddressInput]);
 
   const handleLogin = () => {
     if (isAddress(addressInput)) {
