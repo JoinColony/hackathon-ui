@@ -47,13 +47,31 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     return Number(parseInt(currentUser.reputation, 10) / totalReputation * 100).toFixed(2);
   };
 
+  const getCurrentUserProjects = async (address: string) => {
+    const data = await getData(`users/${address}`) || {};
+
+    if (!data || !data.projects) {
+      return []
+    }
+
+    return data.projects.map(({ id, leagueId, info }: any) => {
+      return {
+        id,
+        leagueId,
+        ...(info ? JSON.parse(info) : {}),
+      }
+    });
+  };
+
   const logIn = (address: string) => {
     const apiRequest = async () => {
       const data = await postData('users/login', { id: address });
       if (data && data.id === address) {
+        const projects = await getCurrentUserProjects(address);
         const profile = JSON.stringify({
           ...data.profile,
           reputationPercent: await getCurrentUserReputationPercent(address),
+          projects,
         });
         localStorage.setItem('address', address);
         localStorage.setItem('profile', profile);

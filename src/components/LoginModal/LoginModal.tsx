@@ -2,6 +2,7 @@ import { FC, useState, useContext, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { isAddress } from 'ethers';
 import { AuthContext } from '../AuthContext';
+import { getAddress } from 'ethers';
 
 interface LoginModalProps {
   onClose: () => void;
@@ -18,7 +19,7 @@ const LoginModal: FC<LoginModalProps> = ({ onClose }) => {
       // @ts-ignore
       window.ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {
         const [account] = accounts;
-        setAddressInput(account);
+        setAddressInput(getAddress(account));
       });
     }
   }, [setAddressInput]);
