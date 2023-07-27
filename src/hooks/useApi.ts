@@ -40,6 +40,7 @@ const useApi = () => {
       setError(null);
 
       const response = await fetch(`${API_ENDPOINT}/${url}`, {
+        credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
