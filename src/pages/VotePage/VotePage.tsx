@@ -1,24 +1,12 @@
 import { Link } from 'react-router-dom';
-import CircleComponent from 'components/UserCircleAvatar';
-import DropdownMenu from 'components/DropdownMenu';
 import { useState, useContext } from 'react';
 import { AuthContext } from 'components/AuthContext';
 import LoginModal from 'components/LoginModal';
 import ColonyPoolCard from './ColonyPoolCard';
 
 const VotePage = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authContext = useContext(AuthContext);
-
-  const handleDropdownClick = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  // handle what to do when the dropdown menu is clicked
-  const handleDropdownState = (isOpen: any) => {
-    setDropdownOpen(isOpen);
-  };
 
   const handleVote = (event: any) => {
     event.preventDefault();
@@ -28,27 +16,6 @@ const VotePage = () => {
       setIsModalOpen(true);
     }
   };
-
-  const handleDropdownItemGeneric = (event: any) => {
-    event.preventDefault();
-    event.stopPropagation();
-    alert('clicked');
-  };
-
-  const dropdownItems = [
-    {
-      name: 'View on Colony',
-      handler: handleDropdownItemGeneric,
-    },
-    {
-      name: 'View Project',
-      handler: handleDropdownItemGeneric,
-    },
-    {
-      name: 'View Website',
-      handler: handleDropdownItemGeneric,
-    },
-  ];
 
   return (
     <div className="mx-auto flex justify-center items-center">
