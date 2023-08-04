@@ -102,7 +102,8 @@ const ProjectForm: React.FC = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { postData, error: submitError } = useApi();
-  const { address, loggedIn, refreshCurrentUserProjects } = useContext(AuthContext);
+  const { address, loggedIn, refreshCurrentUserProjects } =
+    useContext(AuthContext);
   const handleChange = (id: string) => (value: string) => {
     setFormState((prevState) => ({ ...prevState, [id]: value }));
   };
@@ -178,9 +179,7 @@ const ProjectForm: React.FC = () => {
         ))}
 
         <div className="w-full flex justify-end">
-          {(!isSubmitted) && (
-            <SubmitButton disabled={!loggedIn} />
-          )}
+          {!isSubmitted && <SubmitButton disabled={!loggedIn} />}
           {isSubmitted && !submitError && (
             <div className="border flex items-center gap-x-2 w-2/3 text-left py-3 px-6 text-sm font-semibold rounded-md bg-light-green-100 border-light-green-400">
               <CheckCircle />
