@@ -141,7 +141,7 @@ const VotePage = () => {
             <div className="w-full h-full px-8 flex-col justify-start items-start gap-6 flex">
               <div className="self-stretch justify-start items-start gap-6 inline-flex">
                 {currentCombination.map((project: any) => {
-                  const { projectTitle, projectDescription } = JSON.parse(
+                  const { projectTitle, projectDescription, updates = [] } = JSON.parse(
                     project.info,
                   );
                   const [lastUpdate] = updates.sort((
