@@ -80,7 +80,7 @@ const ColonyPoolCard = ({
 
   return (
     <div
-      className="group grow shrink basis-0 h-full p-6 bg-white rounded-lg border border-gray-200 justify-between items-center gap-6 flex hover:bg-blue-100 hover:border-light-blue-400 relative"
+      className="cursor-pointer group grow shrink basis-0 h-full p-6 bg-white rounded-lg border border-gray-200 justify-between items-center gap-6 flex hover:bg-blue-100 hover:border-light-blue-400 relative"
       onClick={(e) => onClick(e, projectId)}
     >
       <div className="grow shrink basis-0 flex-col justify-start items-center gap-6 inline-flex">

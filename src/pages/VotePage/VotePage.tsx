@@ -6,6 +6,8 @@ import LoginModal from 'components/LoginModal';
 import useApi from 'hooks/useApi';
 
 import ColonyPoolCard from './ColonyPoolCard';
+import { getTierFromLeague } from 'utils/leagues';
+import Container from 'components/Container/Container';
 
 function generateCombinations(projects: any[]): any[][] {
   let combinations = [];
@@ -138,7 +140,7 @@ const VotePage = () => {
             </div>
           </div>
         </div>
-        {currentCombination && (
+        {currentCombination ? (
           <div className="self-stretch h-full flex-col justify-start items-center gap-6 flex">
             <div className="w-full h-full px-8 flex-col justify-start items-start gap-6 flex">
               <div className="self-stretch justify-start items-start gap-6 inline-flex">
@@ -170,10 +172,12 @@ const VotePage = () => {
             <div className="self-stretch justify-center items-center gap-2.5 inline-flex">
               <div className="justify-start items-center gap-1 flex">
                 <Link
-                  to="#"
+                  to={`/tier/${getTierFromLeague(
+                    currentCombination[0].leagueId,
+                  )}`}
                   className="text-center text-gray-900 text-xs font-medium leading-[18px] hover:text-light-blue-400"
                 >
-                  View league
+                  View league tier
                 </Link>
               </div>
               <div className="px-3 py-2 bg-white rounded-lg border border-gray-300 hover:border-light-blue-400 justify-center items-center gap-2 flex group cursor-pointer">
@@ -187,6 +191,12 @@ const VotePage = () => {
               </div>
             </div>
           </div>
+        ) : (
+          <Container>
+            <div className="flex justify-center">
+              <div className="font-bold">You're all caught up!</div>
+            </div>
+          </Container>
         )}
       </div>
       {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}
