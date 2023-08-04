@@ -5,9 +5,7 @@ import TiersList from './TiersList';
 import useApi from 'hooks/useApi';
 import { useEffect, useState } from 'react';
 import { Project } from 'types';
-
-// league tier is floored log2 of leagueId, plus 1
-const getLeagueTier = (leagueId: number) => Math.floor(Math.log2(leagueId)) + 1;
+import { getLeagueTier } from 'helpers/tiers';
 
 const AllLeaguesPage = () => {
   const { getData } = useApi();

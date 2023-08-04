@@ -5,7 +5,7 @@ interface ProjectItemProps {
   rank: number;
   name: string;
   primaryMetric: React.ReactNode;
-  secondaryMetric: React.ReactNode;
+  secondaryMetric?: React.ReactNode;
   avatar?: React.ReactNode;
   isTop?: boolean;
 }
@@ -56,14 +56,16 @@ const ProjectItem = ({
             {primaryMetric}
           </div>
         </div>
-        <div
-          className={classNames(
-            'text-sm font-medium leading-tight',
-            isTop && 'text-blue-600',
-          )}
-        >
-          {secondaryMetric}
-        </div>
+        {secondaryMetric && (
+          <div
+            className={classNames(
+              'text-sm font-medium leading-tight',
+              isTop && 'text-blue-600',
+            )}
+          >
+            {secondaryMetric}
+          </div>
+        )}
       </div>
     </div>
   );

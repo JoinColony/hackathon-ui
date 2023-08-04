@@ -2,12 +2,12 @@ import Container from 'components/Container';
 import Metrics from 'components/Metrics';
 import Notification from 'components/Notification';
 import ProjectItem from 'components/ProjectItem';
-import ProjectListBadge from 'components/ProjectListBadge';
 import { useEffect, useState } from 'react';
 import { Project } from 'types';
 import { Link } from 'react-router-dom';
 import useApi from 'hooks/useApi';
 import UserCircleAvatar from 'components/UserCircleAvatar';
+import { calculateSingleProjectBudget, getLeagueTier } from 'helpers/tiers';
 
 // const projects = [
 //   {
@@ -36,6 +36,8 @@ import UserCircleAvatar from 'components/UserCircleAvatar';
 //   },
 // ];
 
+const TOTAL_BUDGET = 100_000;
+
 const AllProjectsPage = () => {
   const { getData } = useApi();
 
@@ -45,7 +47,39 @@ const AllProjectsPage = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       const projects = await getData('projects?where={"leagueId": {"not": 0}}');
-      setProjects(projects ?? []);
+
+      const leagueProjects: Project[] = [];
+      projects.forEach((project: Project) => {
+        const { leagueId } = project;
+
+        if (leagueProjects[leagueId]) {
+          leagueProjects[leagueId].push(project);
+        } else {
+          leagueProjects[leagueId] = [project];
+        }
+      });
+
+      const mappedProjects = [];
+      console.log({ leagueProjects });
+
+      for (const projects of leagueProjects) {
+        if (!projects) {
+          continue;
+        }
+
+        for (let i = 0; i < projects.length; i++) {
+          const project = projects[i];
+          const tier = getLeagueTier(project.leagueId);
+          const budget = calculateSingleProjectBudget(
+            tier,
+            i + 1,
+            TOTAL_BUDGET,
+          );
+          mappedProjects.push({ ...project, budget, tier });
+        }
+      }
+
+      setProjects(mappedProjects);
     };
 
     const fetchVotesCount = async () => {
@@ -57,7 +91,14 @@ const AllProjectsPage = () => {
     fetchVotesCount();
   }, [getData]);
 
-  console.log(projects);
+  useEffect(() => {
+    console.log(projects);
+    const highestLeagueId = Math.max(
+      ...projects.map((project) => project.leagueId),
+    );
+    const numberOfTiers = getLeagueTier(highestLeagueId);
+    console.log({ numberOfTiers });
+  }, [projects]);
 
   return (
     <div className="pt-12 pb-24 flex flex-col gap-6">
@@ -96,7 +137,12 @@ const AllProjectsPage = () => {
               value: (
                 <>
                   <span className="text-gray-900 text-4xl font-semibold leading-[44px]">
-                    $100,000{' '}
+                    {`$${new Intl.NumberFormat('en-US').format(
+                      projects.reduce(
+                        (total, project) => total + project.budget,
+                        0,
+                      ),
+                    )}`}
                   </span>
                   <span className="text-gray-900 text-base font-semibold leading-[44px]">
                     USD
@@ -114,12 +160,11 @@ const AllProjectsPage = () => {
           <h3 className="text-gray-900 text-2xl font-semibold leading-[30px]">
             Project funding leaderboard
           </h3>
-          {projects.map(({ info }, index) => {
+          {projects.map(({ leagueId, info, budget }, index) => {
             const projectInfo = JSON.parse(info);
 
             return (
               <>
-                {index === 2 && <ProjectListBadge type="demoted" />}
                 <ProjectItem
                   key={index}
                   rank={index + 1}
@@ -133,10 +178,8 @@ const AllProjectsPage = () => {
                   isTop={index === 0}
                   // TODO
                   primaryMetric={`$${new Intl.NumberFormat('en-US').format(
-                    100,
+                    budget,
                   )} USD`}
-                  // TODO
-                  secondaryMetric={`${100}%`}
                 />
               </>
             );
