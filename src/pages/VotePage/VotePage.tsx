@@ -39,7 +39,9 @@ const VotePage = () => {
       const fetchedProjects = await api.getData('projects');
       setProjects(fetchedProjects);
     })();
-  }, [api]);
+    // don't include api in dependencies as it causes an infinite loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const updateCombinationIndex = () => {
     const newIndex = currentCombinationIndex + 1;
@@ -141,13 +143,17 @@ const VotePage = () => {
             <div className="w-full h-full px-8 flex-col justify-start items-start gap-6 flex">
               <div className="self-stretch justify-start items-start gap-6 inline-flex">
                 {currentCombination.map((project: any) => {
-                  const { projectTitle, projectDescription, updates = [] } = JSON.parse(
-                    project.info,
+                  const {
+                    projectTitle,
+                    projectDescription,
+                    updates = [],
+                  } = JSON.parse(project.info);
+                  const [lastUpdate] = updates.sort(
+                    (
+                      { timestamp: timestampA }: { timestamp: number },
+                      { timestamp: timestampB }: { timestamp: number },
+                    ) => timestampB - timestampA,
                   );
-                  const [lastUpdate] = updates.sort((
-                    { timestamp: timestampA }: { timestamp: number },
-                    { timestamp: timestampB }: { timestamp: number }
-                  ) => timestampB - timestampA);
                   return (
                     <ColonyPoolCard
                       key={project.id}
