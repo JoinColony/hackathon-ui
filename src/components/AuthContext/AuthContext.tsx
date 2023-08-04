@@ -7,6 +7,7 @@ interface AuthContextType {
   address: string | null;
   logIn: (address: string) => void;
   logOut: () => void;
+  refreshCurrentUserProjects: () => void;
   profile: string | null;
 }
 
@@ -15,6 +16,7 @@ export const AuthContext = createContext<AuthContextType>({
   address: null,
   logIn: () => {},
   logOut: () => {},
+  refreshCurrentUserProjects: () => {},
   profile: null,
 });
 
@@ -34,8 +36,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     const profile = localStorage.getItem('profile');
     if (address) {
       setLoggedIn(true);
-      setAddress(getAddress(address));
+      setAddress(address);
       setProfile(profile);
+      refreshCurrentUserProjects();
     }
   }, []);
 
@@ -64,20 +67,34 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     });
   };
 
+  const refreshCurrentUserProjects = async () => {
+    const address = localStorage.getItem('address') || ''; // address should already be checksummed
+    const projects = await getCurrentUserProjects(address);
+    const profile = localStorage.getItem('profile');
+    const parsedProfile = JSON.parse(profile || '{}');
+    const newProfile = JSON.stringify({
+      ...parsedProfile,
+      projects,
+    });
+    localStorage.setItem('profile', newProfile);
+    setProfile(newProfile);
+  };
+
   const logIn = (address: string) => {
+    const checksummedUserAddress = getAddress(address);
     const apiRequest = async () => {
-      const data = await postData('users/login', { id: address });
-      if (data && data.id === address) {
-        const projects = await getCurrentUserProjects(address);
+      const data = await postData('users/login', { id: checksummedUserAddress });
+      if (data && data.id === checksummedUserAddress) {
+        const projects = await getCurrentUserProjects(checksummedUserAddress);
         const profile = JSON.stringify({
           ...data.profile,
-          reputationPercent: await getCurrentUserReputationPercent(address),
+          reputationPercent: await getCurrentUserReputationPercent(checksummedUserAddress),
           projects,
         });
-        localStorage.setItem('address', address);
+        localStorage.setItem('address', checksummedUserAddress);
         localStorage.setItem('profile', profile);
         setLoggedIn(true);
-        setAddress(getAddress(address));
+        setAddress(checksummedUserAddress);
         setProfile(profile);
       }
     };
@@ -93,7 +110,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ loggedIn, address, logIn, logOut, profile }}>
+    <AuthContext.Provider value={{ loggedIn, address, logIn, logOut, profile, refreshCurrentUserProjects }}>
       {children}
     </AuthContext.Provider>
   );

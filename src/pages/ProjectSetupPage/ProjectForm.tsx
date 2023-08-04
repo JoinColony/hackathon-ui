@@ -101,8 +101,8 @@ const ProjectForm: React.FC = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { postData } = useApi();
-  const authContext = useContext(AuthContext);
+  const { postData, error: submitError } = useApi();
+  const { address, loggedIn, refreshCurrentUserProjects } = useContext(AuthContext);
   const handleChange = (id: string) => (value: string) => {
     setFormState((prevState) => ({ ...prevState, [id]: value }));
   };
@@ -127,11 +127,12 @@ const ProjectForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm(formState)) {
-      setIsSubmitted(true);
       await postData('projects', {
         info: JSON.stringify({ ...formState, updates: [] }),
-        owner: authContext.address,
+        userId: address,
       });
+      setIsSubmitted(true);
+      refreshCurrentUserProjects();
     }
   };
 
@@ -177,12 +178,18 @@ const ProjectForm: React.FC = () => {
         ))}
 
         <div className="w-full flex justify-end">
-          {!isSubmitted ? (
-            <SubmitButton disabled={!authContext.loggedIn} />
-          ) : (
+          {(!isSubmitted) && (
+            <SubmitButton disabled={!loggedIn} />
+          )}
+          {isSubmitted && !submitError && (
             <div className="border flex items-center gap-x-2 w-2/3 text-left py-3 px-6 text-sm font-semibold rounded-md bg-light-green-100 border-light-green-400">
               <CheckCircle />
               Your project has been submitted
+            </div>
+          )}
+          {submitError && (
+            <div className="border flex items-center gap-x-2 w-2/3 text-left py-3 px-6 text-sm font-semibold rounded-md bg-red-100 border-red-400">
+              {submitError}
             </div>
           )}
         </div>
