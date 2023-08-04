@@ -97,6 +97,14 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   };
 
   const logOut = () => {
+    const address = localStorage.getItem('address');
+    const checksummedUserAddress = getAddress(address || '');
+    (async () => {
+      await postData('users/logout', {
+        id: checksummedUserAddress,
+      });
+    })();
+
     localStorage.removeItem('address');
     localStorage.removeItem('profile');
     setLoggedIn(false);
