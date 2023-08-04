@@ -19,7 +19,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const profileData = JSON.parse(profile || '{}');
 
-
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleDropdownClick = () => {
@@ -76,18 +75,29 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex">
-                {profileData?.name ? profileData.name : <ShortenedAddress address={address ?? ''} />}
+                {profileData?.name ? (
+                  profileData.name
+                ) : (
+                  <ShortenedAddress address={address ?? ''} />
+                )}
               </div>
               {dropdownItems.length > 0 && (
                 <div className="self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-200 justify-start items-center gap-3.5 flex w-16">
                   <div className="absolute mt-0">
-                      <DropdownMenu onClick={handleDropdownClick} onStateChange={handleDropdownState} items={dropdownItems}>
-                        <button type="button">
-                          <div className="text-slate-700 text-xs font-medium leading-[18px]">Admin</div>
-                        </button>
-                      </DropdownMenu>
+                    <DropdownMenu
+                      onClick={handleDropdownClick}
+                      onStateChange={handleDropdownState}
+                      items={dropdownItems}
+                    >
+                      <button type="button">
+                        <div className="text-slate-700 text-xs font-medium leading-[18px]">
+                          Admin
+                        </div>
+                      </button>
+                    </DropdownMenu>
                   </div>
-                </div>)}
+                </div>
+              )}
               <Button
                 variant="secondary"
                 label="Logout"
@@ -105,7 +115,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <LoginModal handleClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };
