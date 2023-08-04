@@ -43,7 +43,8 @@ const VotePage = () => {
       setCurrentCombinationIndexes(JSON.parse(storedIndexes || '{}') || {});
     }
     (async () => {
-      const fetchedProjects = await api.getData('projects');
+      let fetchedProjects = await api.getData('projects');
+      fetchedProjects = fetchedProjects.filter((p:any) => p.leagueId);
       setProjects(fetchedProjects);
     })();
     // If api is inside the dependency array it will cause a infinite fetch loop
@@ -135,7 +136,6 @@ const VotePage = () => {
   // post votes to the server
   useEffect(() => {
     const votedCombinations = JSON.parse(localStorage.getItem('votedCombinations') || '[]');
-
 
     // todo: post after voting on just a couple of items in the league
     if (votedCombinations.length === uniqueCombinations.length) {
