@@ -15,7 +15,6 @@ function generateCombinations(projects: any[]): any[][] {
       if (projects[i].leagueId === projects[j].leagueId) {
         combinations.push([projects[i], projects[j]]);
       }
-      
     }
   }
 
@@ -26,9 +25,10 @@ const VotePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authContext = useContext(AuthContext);
   const api = useApi();
-  const [projects, setProjects] = useState([]); 
+  const [projects, setProjects] = useState([]);
 
-  const [currentCombinationIndex, setCurrentCombinationIndex] = useState<number>(0);
+  const [currentCombinationIndex, setCurrentCombinationIndex] =
+    useState<number>(0);
 
   useEffect(() => {
     const storedIndex = localStorage.getItem('currentCombinationIndex');
@@ -39,7 +39,7 @@ const VotePage = () => {
       const fetchedProjects = await api.getData('projects');
       setProjects(fetchedProjects);
     })();
-  }, []);
+  }, [api]);
 
   const updateCombinationIndex = () => {
     const newIndex = currentCombinationIndex + 1;
@@ -52,14 +52,19 @@ const VotePage = () => {
     event.preventDefault();
 
     if (authContext.loggedIn) {
-      const votedCombinations = JSON.parse(localStorage.getItem('votedCombinations') || '[]');
+      const votedCombinations = JSON.parse(
+        localStorage.getItem('votedCombinations') || '[]',
+      );
       const alpha = uniqueCombinations[currentCombinationIndex][0].id;
       const beta = uniqueCombinations[currentCombinationIndex][1].id;
       const vote = projectId === alpha ? 1 : 0;
 
       votedCombinations.push({ alpha, beta, vote });
 
-      localStorage.setItem('votedCombinations', JSON.stringify(votedCombinations));
+      localStorage.setItem(
+        'votedCombinations',
+        JSON.stringify(votedCombinations),
+      );
       updateCombinationIndex();
     } else {
       setIsModalOpen(true);
@@ -73,9 +78,14 @@ const VotePage = () => {
   const currentCombination = uniqueCombinations[currentCombinationIndex];
 
   useEffect(() => {
-    const votedCombinations = JSON.parse(localStorage.getItem('votedCombinations') || '[]');
+    const votedCombinations = JSON.parse(
+      localStorage.getItem('votedCombinations') || '[]',
+    );
 
-    if (uniqueCombinations.length > 0 && currentCombinationIndex > (uniqueCombinations.length - 1)) {
+    if (
+      uniqueCombinations.length > 0 &&
+      currentCombinationIndex > uniqueCombinations.length - 1
+    ) {
       votedCombinations.forEach((combination: any) => {
         api.postData('votes', combination);
       });
@@ -105,7 +115,8 @@ const VotePage = () => {
                   </div>
                   <div className="self-stretch justify-start items-center gap-1 inline-flex">
                     <div className="grow shrink basis-0 text-gray-500 text-base font-normal leading-normal">
-                    Use your reputation to support a project, the higher their ranking the more funding they will receive.
+                      Use your reputation to support a project, the higher their
+                      ranking the more funding they will receive.
                     </div>
                     <div className="justify-start items-center gap-1 flex">
                       <div className="w-4 h-4 relative" />
@@ -130,7 +141,9 @@ const VotePage = () => {
             <div className="w-full h-full px-8 flex-col justify-start items-start gap-6 flex">
               <div className="self-stretch justify-start items-start gap-6 inline-flex">
                 {currentCombination.map((project: any) => {
-                  const { projectTitle, projectDescription } = JSON.parse(project.info);
+                  const { projectTitle, projectDescription } = JSON.parse(
+                    project.info,
+                  );
                   return (
                     <ColonyPoolCard
                       key={project.id}
@@ -139,7 +152,8 @@ const VotePage = () => {
                       title={projectTitle}
                       subtitle={projectDescription}
                     />
-                )})}
+                  );
+                })}
               </div>
             </div>
             <div className="self-stretch justify-center items-center gap-2.5 inline-flex">
@@ -161,10 +175,10 @@ const VotePage = () => {
                 </button>
               </div>
             </div>
-          </div>          
+          </div>
         )}
       </div>
-      {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <LoginModal handleClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };
