@@ -18,6 +18,9 @@ function generateCombinations(projects: any[]): any[][] {
     }
   }
 
+  // Sort combinations by leagueId
+  combinations.sort((a, b) => a[0].leagueId - b[0].leagueId);
+
   // todo filter out already voted combinations, only if user is logged in
   return combinations;
 }
@@ -44,7 +47,7 @@ const VotePage = () => {
     }
     (async () => {
       let fetchedProjects = await api.getData('projects');
-      fetchedProjects = fetchedProjects.filter((p:any) => p.leagueId);
+      fetchedProjects = fetchedProjects?.filter((p:any) => p.leagueId) || [];
       setProjects(fetchedProjects);
     })();
     // If api is inside the dependency array it will cause a infinite fetch loop
