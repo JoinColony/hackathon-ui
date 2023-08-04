@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 import useApi from 'hooks/useApi';
 import { getAddress } from 'ethers';
 
@@ -26,48 +26,39 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [address, setAddress] = useState<string | null>(null);
   const [profile, setProfile] = useState<string | null>(null);
-  const {
-    postData,
-    getData,
-  } = useApi();
-
-  useEffect(() => {
-    const address = localStorage.getItem('address');
-    const profile = localStorage.getItem('profile');
-    if (address) {
-      setLoggedIn(true);
-      setAddress(address);
-      setProfile(profile);
-      refreshCurrentUserProjects();
-    }
-  }, []);
+  const { postData, getData } = useApi();
 
   const getCurrentUserReputationPercent = async (address: string) => {
-    const data = await getData('users') || [];
+    const data = (await getData('users')) || [];
     const totalReputation = data.reduce((total: number, user: any) => {
       return total + parseInt(user.reputation, 10);
     }, 0);
     const currentUser = data.find((user: any) => user.id === address);
-    return Number(parseInt(currentUser.reputation, 10) / totalReputation * 100).toFixed(2);
+    return Number(
+      (parseInt(currentUser.reputation, 10) / totalReputation) * 100,
+    ).toFixed(2);
   };
 
-  const getCurrentUserProjects = async (address: string) => {
-    const data = await getData(`users/${address}`) || {};
+  const getCurrentUserProjects = useCallback(
+    async (address: string) => {
+      const data = (await getData(`users/${address}`)) || {};
 
-    if (!data || !data.projects) {
-      return []
-    }
-
-    return data.projects.map(({ id, leagueId, info }: any) => {
-      return {
-        id,
-        leagueId,
-        ...(info ? JSON.parse(info) : {}),
+      if (!data || !data.projects) {
+        return [];
       }
-    });
-  };
 
-  const refreshCurrentUserProjects = async () => {
+      return data.projects.map(({ id, leagueId, info }: any) => {
+        return {
+          id,
+          leagueId,
+          ...(info ? JSON.parse(info) : {}),
+        };
+      });
+    },
+    [getData],
+  );
+
+  const refreshCurrentUserProjects = useCallback(async () => {
     const address = localStorage.getItem('address') || ''; // address should already be checksummed
     const projects = await getCurrentUserProjects(address);
     const profile = localStorage.getItem('profile');
@@ -78,17 +69,21 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     });
     localStorage.setItem('profile', newProfile);
     setProfile(newProfile);
-  };
+  }, [getCurrentUserProjects]);
 
   const logIn = (address: string) => {
     const checksummedUserAddress = getAddress(address);
     const apiRequest = async () => {
-      const data = await postData('users/login', { id: checksummedUserAddress });
+      const data = await postData('users/login', {
+        id: checksummedUserAddress,
+      });
       if (data && data.id === checksummedUserAddress) {
         const projects = await getCurrentUserProjects(checksummedUserAddress);
         const profile = JSON.stringify({
           ...data.profile,
-          reputationPercent: await getCurrentUserReputationPercent(checksummedUserAddress),
+          reputationPercent: await getCurrentUserReputationPercent(
+            checksummedUserAddress,
+          ),
           projects,
         });
         localStorage.setItem('address', checksummedUserAddress);
@@ -109,8 +104,28 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     setProfile(null);
   };
 
+  useEffect(() => {
+    const address = localStorage.getItem('address');
+    const profile = localStorage.getItem('profile');
+    if (address) {
+      setLoggedIn(true);
+      setAddress(address);
+      setProfile(profile);
+      refreshCurrentUserProjects();
+    }
+  }, [refreshCurrentUserProjects]);
+
   return (
-    <AuthContext.Provider value={{ loggedIn, address, logIn, logOut, profile, refreshCurrentUserProjects }}>
+    <AuthContext.Provider
+      value={{
+        loggedIn,
+        address,
+        logIn,
+        logOut,
+        profile,
+        refreshCurrentUserProjects,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
