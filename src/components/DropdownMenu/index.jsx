@@ -44,7 +44,7 @@ const DropdownMenu = ({ onClick, onStateChange, items, children }) => {
     <div ref={domNode} onClick={handleClickInside} className="relative">
       {children}
       {isOpen && (
-        <div className="w-52 h-36 p-6 bg-white rounded-lg shadow border border-gray-200 flex-col justify-start items-start gap-4 inline-flex absolute right-0 top-10 z-20">
+        <div className="w-52 p-6 bg-white rounded-lg shadow border border-gray-200 flex-col justify-start items-start gap-4 inline-flex absolute right-0 top-10 z-20">
           {items.map((item) => (
             <div className="self-stretch justify-start items-start gap-4 inline-flex">
               <div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
