@@ -6,6 +6,7 @@ import Button from 'components/Button';
 import NavLink from 'components/NavLink';
 import { useNavigate } from 'react-router-dom';
 import DropdownMenu from 'components/DropdownMenu';
+import CopyableAddress from 'components/CopyableAddress';
 
 const Logo = () => (
   <a href="/" className="relative leading-[30px] text-xl font-semibold">
@@ -78,7 +79,9 @@ const Navbar = () => {
                 {profileData?.name ? (
                   profileData.name
                 ) : (
-                  <ShortenedAddress address={address ?? ''} />
+                  <CopyableAddress address={address ?? ''}>
+                    <ShortenedAddress address={address ?? ''} />
+                  </CopyableAddress>
                 )}
               </div>
               {dropdownItems.length > 0 && (
