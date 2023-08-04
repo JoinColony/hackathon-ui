@@ -8,13 +8,15 @@ interface ColonyPoolCardProps {
   title: string;
   subtitle: string;
   projectId: number;
+  lastUpdated: number;
 }
 
 const ColonyPoolCard = ({
   handleClick,
   title,
   subtitle,
-  projectId
+  projectId,
+  lastUpdated,
 }: ColonyPoolCardProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -74,7 +76,6 @@ const ColonyPoolCard = ({
     }
   }
 
-  const lastUpdatedPlaceholder = 1690415342667;
   const timeInLeagurePlaceholder = 1690411442667;
 
   return (
@@ -86,7 +87,7 @@ const ColonyPoolCard = ({
         <ProjectCard title={title} subtitle={subtitle} />
         <div className="self-stretch text-gray-500 text-sm font-normal leading-tight border-t group-hover:border-t-light-blue-400 group-hover:text-light-blue-400 pt-4 flex justify-between">
           <span>Total Funding: $XYZ</span>
-          <span>Last Updated: {formatTimeAgo(lastUpdatedPlaceholder)}</span>
+          <span>Last Updated: {formatTimeAgo(lastUpdated)}</span>
           <span>Time in League: {formatTimeAgo(timeInLeagurePlaceholder)}</span>
         </div>
       </div>

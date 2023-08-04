@@ -15,7 +15,6 @@ function generateCombinations(projects: any[]): any[][] {
       if (projects[i].leagueId === projects[j].leagueId) {
         combinations.push([projects[i], projects[j]]);
       }
-      
     }
   }
 
@@ -24,9 +23,9 @@ function generateCombinations(projects: any[]): any[][] {
 
 const VotePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const authContext = useContext(AuthContext);
+  const { loggedIn } = useContext(AuthContext);
   const api = useApi();
-  const [projects, setProjects] = useState([]); 
+  const [projects, setProjects] = useState([]);
 
   const [currentCombinationIndex, setCurrentCombinationIndex] = useState<number>(0);
 
@@ -51,7 +50,7 @@ const VotePage = () => {
   const handleVote = (event: SyntheticEvent, projectId: number) => {
     event.preventDefault();
 
-    if (authContext.loggedIn) {
+    if (loggedIn) {
       const votedCombinations = JSON.parse(localStorage.getItem('votedCombinations') || '[]');
       const alpha = uniqueCombinations[currentCombinationIndex][0].id;
       const beta = uniqueCombinations[currentCombinationIndex][1].id;
@@ -130,7 +129,11 @@ const VotePage = () => {
             <div className="w-full h-full px-8 flex-col justify-start items-start gap-6 flex">
               <div className="self-stretch justify-start items-start gap-6 inline-flex">
                 {currentCombination.map((project: any) => {
-                  const { projectTitle, projectDescription } = JSON.parse(project.info);
+                  const { projectTitle, projectDescription, updates = [] } = JSON.parse(project.info);
+                  const [lastUpdate] = updates.sort((
+                    { timestamp: timestampA }: { timestamp: number },
+                    { timestamp: timestampB }: { timestamp: number }
+                  ) => timestampB - timestampA);
                   return (
                     <ColonyPoolCard
                       key={project.id}
@@ -138,6 +141,7 @@ const VotePage = () => {
                       handleClick={handleVote}
                       title={projectTitle}
                       subtitle={projectDescription}
+                      lastUpdated={lastUpdate?.timestamp || 1000000000000}
                     />
                 )})}
               </div>
@@ -161,7 +165,7 @@ const VotePage = () => {
                 </button>
               </div>
             </div>
-          </div>          
+          </div>
         )}
       </div>
       {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}

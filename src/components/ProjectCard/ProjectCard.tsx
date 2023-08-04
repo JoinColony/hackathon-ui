@@ -8,7 +8,7 @@ interface ProjectCardProps {
 const ProjectCard = ({ title, subtitle }: ProjectCardProps) => {
   return (
     <div className="group self-stretch flex-col justify-start items-center gap-4 flex">
-      <CircleComponent name="Cat" />
+      <CircleComponent name={title} />
       <div />
       <div className="flex flex-col gap-y-4">
         <div className="group-hover:text-light-blue-400 font-semibold text-2xl text-center">
