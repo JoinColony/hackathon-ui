@@ -22,113 +22,147 @@ function generateCombinations(projects: any[]): any[][] {
   return combinations;
 }
 
-// function generateCombinations(projects: any[]): Record<number, any[]> {
-//   let combinations: Record<number, any[]> = {};
-
-//   for (let i = 0; i < projects.length - 1; i++) {
-//     for (let j = i + 1; j < projects.length; j++) {
-//       if (projects[i].leagueId === projects[j].leagueId) {
-//         if (combinations[projects[i].leagueId]) {
-//           combinations[projects[i].leagueId].push([projects[i], projects[j]]);
-//         } else {
-//           combinations[projects[i].leagueId] = [[projects[i], projects[j]]];
-//         }
-//       }
-//     }
-//   }
-
 const VotePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { loggedIn } = useContext(AuthContext);
   const api = useApi();
   const [projects, setProjects] = useState([]);
+  const [uniqueCombinations, setUniqueCombinations] = useState<any[][]>([]);
   const [leagues, setLeagues] = useState<{ id: number }[]>([]);
   const [currentLeague, setCurrentLeague] = useState(null);
-  const [currentCombinationIndex, setCurrentCombinationIndex] = useState<number>(0);
+  const [currentCombinationIndexes, setCurrentCombinationIndexes] = useState<Record<number, number>>({});
 
+  const ITEMS_COUNT_TO_VOTE_IN_LEAGUE = 5;
+  const currentLeagueId = (currentLeague as any)?.id;
+  const uniqueCombinationsInCurrentLeague = uniqueCombinations.filter(combination => combination[0].leagueId === (currentLeague as unknown as { id: number })?.id);
+  const [currentCombination] = uniqueCombinationsInCurrentLeague.slice(currentCombinationIndexes[currentLeagueId] || 0, currentCombinationIndexes[currentLeagueId] + 1 || 1);
 
   useEffect(() => {
-    const storedIndex = localStorage.getItem('currentCombinationIndex');
-    if (storedIndex) {
-      setCurrentCombinationIndex(Number(storedIndex) || 0);
+    const storedIndexes = localStorage.getItem('currentCombinationIndexes');
+    if (storedIndexes) {
+      setCurrentCombinationIndexes(JSON.parse(storedIndexes || '{}') || {});
     }
     (async () => {
       const fetchedProjects = await api.getData('projects');
       setProjects(fetchedProjects);
     })();
+    // If api is inside the dependency array it will cause a infinite fetch loop
+    //
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const updateCombinationIndex = () => {
-    const newIndex = currentCombinationIndex + 1;
-    localStorage.setItem('currentCombinationIndex', String(newIndex));
-    setCurrentCombinationIndex(newIndex);
+  const updateCombinationIndex = (leagueId: number) => {
+    const newIndex = currentCombinationIndexes[leagueId] ? currentCombinationIndexes[leagueId] + 1 : 1;
+    if (newIndex <= uniqueCombinationsInCurrentLeague.length) {
+      const newCombinationIndexes = { ...currentCombinationIndexes, [leagueId]: newIndex };
+      localStorage.setItem('currentCombinationIndexes', JSON.stringify(newCombinationIndexes));
+      setCurrentCombinationIndexes(newCombinationIndexes);
+    }
   };
 
-  const uniqueCombinations = generateCombinations(projects);
-
-  console.log(uniqueCombinations);
+  useEffect(() => {
+    if (projects && projects.length > 0) {
+      const combinations = generateCombinations(projects);
+      setUniqueCombinations(combinations)
+    }
+  }, [projects]);
 
   const handleVote = (event: SyntheticEvent, projectId: number) => {
     event.preventDefault();
 
     if (loggedIn) {
-      const votedCombinations = JSON.parse(localStorage.getItem('votedCombinations') || '[]');
-      const alpha = uniqueCombinations[currentCombinationIndex][0].id;
-      const beta = uniqueCombinations[currentCombinationIndex][1].id;
-      const vote = projectId === alpha ? 1 : 0;
+      const votedCombinations = JSON.parse(
+        localStorage.getItem('votedCombinations') || '[]',
+      );
 
-      votedCombinations.push({ alpha, beta, vote });
+      // prevent voting if no more conbinations in the league
+      if (uniqueCombinationsInCurrentLeague.slice(currentCombinationIndexes[currentLeagueId] || 1).length >= 1) {
+        const alpha = uniqueCombinationsInCurrentLeague[currentCombinationIndexes[currentLeagueId] || 0][0].id;
+        const beta = uniqueCombinationsInCurrentLeague[currentCombinationIndexes[currentLeagueId] || 0][1].id;
+        const vote = projectId === alpha ? 1 : 0;
 
-      localStorage.setItem('votedCombinations', JSON.stringify(votedCombinations));
-      updateCombinationIndex();
+        votedCombinations.push({ alpha, beta, vote });
+
+        localStorage.setItem(
+          'votedCombinations',
+          JSON.stringify(votedCombinations),
+        );
+
+        updateCombinationIndex(currentLeagueId);
+
+        const remainingLeagues = leagues
+          .filter(({ id }) => {
+            const uniqueCombinationsInLeague = uniqueCombinations.filter(combination => combination[0].leagueId === id);
+            return uniqueCombinationsInLeague.length >= (currentCombinationIndexes[id] || 0);
+          });
+
+        if (remainingLeagues.length) {
+          const randMax = remainingLeagues.length - 1;
+          const randMin = 0;
+          const randomLeagueId = Math.floor(Math.random() * (randMax - randMin + 1) + randMin);
+          const newLeague = remainingLeagues[randomLeagueId];
+
+          if (currentCombinationIndexes[currentLeagueId] % ITEMS_COUNT_TO_VOTE_IN_LEAGUE === 0) {
+            setCurrentLeague(newLeague as any);
+          }
+        }
+
+      } else {
+        alert('voted on everything in this league')
+      }
     } else {
       // force user to log in
       setIsModalOpen(true);
     }
   };
 
+  useEffect(() => {
+    const remainingLeagues = leagues
+      .filter(({ id }) => {
+        const uniqueCombinationsInLeague = uniqueCombinations.filter(combination => combination[0].leagueId === id);
+        return uniqueCombinationsInLeague.length >= (currentCombinationIndexes[id] || 0);
+      });
+    if ((currentCombination || []).length <= 0 && remainingLeagues.length >= 0) {
+      // @ts-ignore
+      setCurrentLeague(remainingLeagues[0]);
+    }
+  }, [currentCombination, currentCombinationIndexes, leagues, uniqueCombinations]);
+
   const handleSkip = () => {
-    updateCombinationIndex();
+    updateCombinationIndex((currentLeague as any)?.id);
   };
 
-  const currentCombination = uniqueCombinations[currentCombinationIndex];
-
-  // post votes on the server
+  // post votes to the server
   useEffect(() => {
     const votedCombinations = JSON.parse(localStorage.getItem('votedCombinations') || '[]');
 
-    // todo: post after voting on just a couple
-    if (uniqueCombinations.length > 0 && currentCombinationIndex > (uniqueCombinations.length - 1)) {
+
+    // todo: post after voting on just a couple of items in the league
+    if (votedCombinations.length === uniqueCombinations.length) {
       votedCombinations.forEach((combination: any) => {
         api.postData('votes', combination);
       });
       localStorage.removeItem('votedCombinations');
-      localStorage.removeItem('currentCombinationIndex');
+      localStorage.removeItem('currentCombinationIndexes');
     }
-  }, [api, currentCombinationIndex, uniqueCombinations]);
+  }, [api, currentCombinationIndexes, uniqueCombinations, currentLeague]);
 
   // update leagues and current league
   useEffect(() => {
-    if (uniqueCombinations) {
+    if (uniqueCombinations.length > 0) {
       // extract leagues
-      const allLeagues = uniqueCombinations.reduce((combination: { id: number }[] = [], project) => {
+      const allLeagues = uniqueCombinations.reduce((leagueAcc: { id: number }[] = [], project) => {
         const [{ leagueId }] = project;
-        const leagueExists = leagues.find(({ id }: { id: number }) => id === leagueId);
+        const leagueExists = leagueAcc.find(({ id }: { id: number }) => id === leagueId);
         if (!leagueExists) {
-          return [...leagues, { id: leagueId }];
+          return [...leagueAcc, { id: leagueId }];
         }
-        return leagues;
+        return leagueAcc;
       }, []).sort(({ id: leagueIdA }: { id: number }, { id: leagueIdB }: { id: number }) => leagueIdA - leagueIdB);
       setLeagues(allLeagues);
       setCurrentLeague(allLeagues[0]);
     }
-  }, []);
-
-  useEffect(() => {
-    // update current league we're voting in
-  }, []);
-
-  console.log(leagues)
+  }, [uniqueCombinations]);
 
   return (
     <div className="mx-auto flex justify-center items-center">
@@ -151,7 +185,8 @@ const VotePage = () => {
                   </div>
                   <div className="self-stretch justify-start items-center gap-1 inline-flex">
                     <div className="grow shrink basis-0 text-gray-500 text-base font-normal leading-normal">
-                    Use your reputation to support a project, the higher their ranking the more funding they will receive.
+                      Use your reputation to support a project, the higher their
+                      ranking the more funding they will receive.
                     </div>
                     <div className="justify-start items-center gap-1 flex">
                       <div className="w-4 h-4 relative" />
@@ -171,13 +206,15 @@ const VotePage = () => {
             </div>
           </div>
         </div>
-        {currentCombination && (
+        {currentCombination ? (
           <div className="self-stretch h-full flex-col justify-start items-center gap-6 flex">
             <div className="w-full h-full px-8 flex-col justify-start items-start gap-6 flex">
-              <p>currently voting in league: </p>
+              <p>currently voting in league: {(currentLeague as unknown as { id: number })?.id}</p>
               <div className="self-stretch justify-start items-start gap-6 inline-flex">
                 {currentCombination.map((project: any) => {
-                  const { projectTitle, projectDescription, updates = [] } = JSON.parse(project.info);
+                  const { projectTitle, projectDescription, updates = [] } = JSON.parse(
+                    project.info,
+                  );
                   const [lastUpdate] = updates.sort((
                     { timestamp: timestampA }: { timestamp: number },
                     { timestamp: timestampB }: { timestamp: number }
@@ -186,12 +223,13 @@ const VotePage = () => {
                     <ColonyPoolCard
                       key={project.id}
                       projectId={project.id}
-                      handleClick={handleVote}
+                      onClick={handleVote}
                       title={projectTitle}
                       subtitle={projectDescription}
                       lastUpdated={lastUpdate?.timestamp || 1000000000000}
                     />
-                )})}
+                  );
+                })}
               </div>
             </div>
             <div className="self-stretch justify-center items-center gap-2.5 inline-flex">
@@ -214,7 +252,14 @@ const VotePage = () => {
               </div>
             </div>
           </div>
-        )}
+        ) : (
+            <div className="self-stretch h-full flex-col justify-start items-center gap-6 flex">
+              <div className="w-full h-full px-8 flex-col justify-start items-start gap-6 flex">
+                <div className="self-stretch justify-start items-start gap-6 inline-flex">
+                  <div>There's nothing to vote on in this epoch</div>
+                </div>
+              </div>
+            </div>)}
       </div>
       {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}
     </div>
