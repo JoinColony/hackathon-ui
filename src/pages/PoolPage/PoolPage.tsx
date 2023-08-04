@@ -42,7 +42,7 @@ const PoolPage = () => {
                 submitted.
               </div>
             </div>
-            <Link to="/league">
+            <Link to="/all-leagues">
               <button className="px-4 py-2.5 bg-blue-600 rounded-lg justify-center items-start gap-2.5 flex text-center text-white text-sm font-medium leading-tight">
                 View leagues
               </button>
