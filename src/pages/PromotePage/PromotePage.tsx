@@ -4,7 +4,7 @@ import Controls from './Controls';
 import { Link } from 'react-router-dom';
 import Container from 'components/Container/Container';
 
-const ApprovePoolPage = () => {
+const PromotePage = () => {
   return (
     <>
       <Container>
@@ -15,25 +15,27 @@ const ApprovePoolPage = () => {
             <>
               <Link to="/pool">
                 <button className="rounded-md bg-light-blue-400 text-white px-4 py-2.5">
-                  View Leaderboard
+                  View projects pool
                 </button>
               </Link>
             </>
           }
         />
-        <div className="w-screen flex justify-center">
-          <div className="flex flex-col gap-y-6 items-center justify-center w-488 border border-light-gray-200 p-6 rounded-md">
-            <ProjectCard
-              title="Cat"
-              subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        <div className="flex flex-col gap-y-4">
+          <div className="w-screen flex justify-center">
+            <div className="flex flex-col gap-y-6 items-center justify-center w-488 border border-light-gray-200 p-6 rounded-md">
+              <ProjectCard
+                title="Cat"
+                subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua."
-            />
-            <Controls />
+              />
+            </div>
           </div>
+          <Controls />
         </div>
       </Container>
     </>
   );
 };
 
-export default ApprovePoolPage;
+export default PromotePage;

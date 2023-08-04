@@ -8,7 +8,6 @@ import { AuthProvider } from 'components/AuthContext/AuthContext';
 import Navbar from 'components/Navbar';
 import PoolPage from 'pages/PoolPage';
 import AllProjectsPage from 'pages/AllProjectsPage';
-import ApprovePoolPage from 'pages/ApprovePoolPage/ApprovePoolPage';
 import AllLeaguesPage from 'pages/AllLeaguesPage/AllLeaguesPage';
 import ProjectPage from 'pages/ProjectPage';
 import TierPage from 'pages/TierPage/TierPage';
@@ -28,7 +27,6 @@ const App = () => (
         <Route path="/pool" element={<PoolPage />} />
         <Route path="/tier/:id" element={<TierPage />} />
         <Route path="/all-projects" element={<AllProjectsPage />} />
-        <Route path="/approve-pool" element={<ApprovePoolPage />} />
         <Route path="/all-leagues" element={<AllLeaguesPage />} />
         <Route path="/project/:id" element={<ProjectPage />} />
         <Route
