@@ -1,6 +1,6 @@
 import Container from 'components/Container/Container';
 import Metrics from 'components/Metrics/Metrics';
-import PageTitle from 'components/TitleContainer/TitleContainer';
+import PageTitle from 'components/Title';
 import LeaguesList from './LeaguesList';
 
 const leagues = [

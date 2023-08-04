@@ -1,5 +1,5 @@
 import ProjectCard from 'components/ProjectCard/ProjectCard';
-import PageTitle from 'components/TitleContainer';
+import PageTitle from 'components/Title';
 import Controls from './Controls';
 import { Link } from 'react-router-dom';
 import Container from 'components/Container/Container';

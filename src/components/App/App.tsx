@@ -12,6 +12,7 @@ import ApprovePoolPage from 'pages/ApprovePoolPage/ApprovePoolPage';
 import AllLeaguesPage from 'pages/AllLeaguesPage/AllLeaguesPage';
 import ProjectPage from 'pages/ProjectPage';
 import TierPage from 'pages/TierPage/TierPage';
+import PromotePage from 'pages/PromotePage/PromotePage';
 
 const App = () => (
   <AuthProvider>
@@ -22,6 +23,7 @@ const App = () => (
         <Route path="/results" element={<ResultsPage />} />
         <Route path="/vote" element={<VotePage />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/promote" element={<PromotePage />} />
         <Route path="/setup" element={<ProjectSetupPage />} />
         <Route path="/pool" element={<PoolPage />} />
         <Route path="/tier/:id" element={<TierPage />} />

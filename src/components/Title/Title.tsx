@@ -1,10 +1,10 @@
-interface TitleContainerProps {
+interface TitleProps {
   title: string;
   subtitle: string;
   button?: React.ReactNode;
 }
 
-const PageTitle = ({ title, subtitle, button }: TitleContainerProps) => {
+const Title = ({ title, subtitle, button }: TitleProps) => {
   return (
     <div className="flex px-8 flex-col justify-start items-start gap-6 self-stretch mt-12 mb-8">
       <div className="self-stretch justify-start items-center gap-4 inline-flex">
@@ -22,4 +22,4 @@ const PageTitle = ({ title, subtitle, button }: TitleContainerProps) => {
   );
 };
 
-export default PageTitle;
+export default Title;

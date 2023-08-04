@@ -1,4 +1,4 @@
-import PageTitle from 'components/TitleContainer/TitleContainer';
+import PageTitle from 'components/Title';
 import Container from 'components/Container/Container';
 import TiersList from './TiersList';
 
