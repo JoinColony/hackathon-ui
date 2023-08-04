@@ -6,8 +6,12 @@ const API_ENDPOINT = 'http://localhost:3001';
 const useApi = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  console.log('useApi is called or re-rendered'); // This will log every time the hook is called or its parent component re-renders
 
   const getData = useCallback(async (url = '/') => {
+    console.log(`Fetching data from ${url}`);
+    
     try {
       setLoading(true);
       setError(null);
@@ -26,8 +30,10 @@ const useApi = () => {
 
       const data = await response.json();
       setLoading(false);
+      console.log(`Data fetched successfully from ${url}`, data);
       return data;
     } catch (error) {
+      console.error(`Error fetching data from ${url}`, error);
       setError((error as Error).message);
       setLoading(false);
       return null;
@@ -35,6 +41,8 @@ const useApi = () => {
   }, []);
 
   const postData = useCallback(async (url = '/', data: any) => {
+    console.log(`Posting data to ${url}`, data);
+    
     try {
       setLoading(true);
       setError(null);
@@ -55,8 +63,10 @@ const useApi = () => {
 
       const responseData = await response.json();
       setLoading(false);
+      console.log(`Data posted successfully to ${url}`, responseData);
       return responseData;
     } catch (error) {
+      console.error(`Error posting data to ${url}`, error);
       setError((error as Error).message);
       setLoading(false);
       return null;

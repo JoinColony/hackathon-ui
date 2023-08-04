@@ -1,21 +1,88 @@
 import { Link } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect, SyntheticEvent } from 'react';
+
 import { AuthContext } from 'components/AuthContext';
 import LoginModal from 'components/LoginModal';
+import useApi from 'hooks/useApi';
+
 import ColonyPoolCard from './ColonyPoolCard';
+
+function generateCombinations(projects: any[]): any[][] {
+  let combinations = [];
+
+  for (let i = 0; i < projects.length - 1; i++) {
+    for (let j = i + 1; j < projects.length; j++) {
+      if (projects[i].leagueId === projects[j].leagueId) {
+        combinations.push([projects[i], projects[j]]);
+      }
+      
+    }
+  }
+
+  return combinations;
+}
 
 const VotePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authContext = useContext(AuthContext);
+  const api = useApi();
+  const [projects, setProjects] = useState([]); 
 
-  const handleVote = (event: any) => {
+  const [currentCombinationIndex, setCurrentCombinationIndex] = useState<number>(0);
+
+  useEffect(() => {
+    const storedIndex = localStorage.getItem('currentCombinationIndex');
+    if (storedIndex) {
+      setCurrentCombinationIndex(Number(storedIndex) || 0);
+    }
+    (async () => {
+      const fetchedProjects = await api.getData('projects');
+      setProjects(fetchedProjects);
+    })();
+  }, []);
+
+  const updateCombinationIndex = () => {
+    const newIndex = currentCombinationIndex + 1;
+    localStorage.setItem('currentCombinationIndex', String(newIndex));
+    setCurrentCombinationIndex(newIndex);
+  };
+  const uniqueCombinations = generateCombinations(projects);
+
+  const handleVote = (event: SyntheticEvent, projectId: number) => {
     event.preventDefault();
+
     if (authContext.loggedIn) {
-      alert('voted old school');
+      const votedCombinations = JSON.parse(localStorage.getItem('votedCombinations') || '[]');
+      const alpha = uniqueCombinations[currentCombinationIndex][0].id;
+      const beta = uniqueCombinations[currentCombinationIndex][1].id;
+      const vote = projectId === alpha ? 1 : 0;
+
+      votedCombinations.push({ alpha, beta, vote });
+
+      localStorage.setItem('votedCombinations', JSON.stringify(votedCombinations));
+      updateCombinationIndex();
     } else {
       setIsModalOpen(true);
     }
   };
+
+  const handleSkip = () => {
+    updateCombinationIndex();
+  };
+
+  const currentCombination = uniqueCombinations[currentCombinationIndex];
+
+  useEffect(() => {
+    const votedCombinations = JSON.parse(localStorage.getItem('votedCombinations') || '[]');
+
+    if (uniqueCombinations.length > 0 && currentCombinationIndex > (uniqueCombinations.length - 1)) {
+      votedCombinations.forEach((combination: any) => {
+        api.postData('votes', combination);
+      });
+      localStorage.removeItem('votedCombinations');
+      localStorage.removeItem('currentCombinationIndex');
+    }
+  }, [api, currentCombinationIndex, uniqueCombinations]);
 
   return (
     <div className="mx-auto flex justify-center items-center">
@@ -58,41 +125,44 @@ const VotePage = () => {
             </div>
           </div>
         </div>
-        <div className="self-stretch h-full flex-col justify-start items-center gap-6 flex">
-          <div className="w-full h-full px-8 flex-col justify-start items-start gap-6 flex">
-            <div className="self-stretch justify-start items-start gap-6 inline-flex">
-              <ColonyPoolCard
-                handleClick={handleVote}
-                title="Cat"
-                subtitle="Lorem Ipsum"
-              />
-              <ColonyPoolCard
-                handleClick={handleVote}
-                title="Cat"
-                subtitle="Lorem Ipsum"
-              />
+        {currentCombination && (
+          <div className="self-stretch h-full flex-col justify-start items-center gap-6 flex">
+            <div className="w-full h-full px-8 flex-col justify-start items-start gap-6 flex">
+              <div className="self-stretch justify-start items-start gap-6 inline-flex">
+                {currentCombination.map((project: any) => {
+                  const { projectTitle, projectDescription } = JSON.parse(project.info);
+                  return (
+                    <ColonyPoolCard
+                      key={project.id}
+                      projectId={project.id}
+                      handleClick={handleVote}
+                      title={projectTitle}
+                      subtitle={projectDescription}
+                    />
+                )})}
+              </div>
             </div>
-          </div>
-          <div className="self-stretch justify-center items-center gap-2.5 inline-flex">
-            <div className="justify-start items-center gap-1 flex">
-              <Link
-                to="#"
-                className="text-center text-gray-900 text-xs font-medium leading-[18px] hover:text-light-blue-400"
-              >
-                View league
-              </Link>
+            <div className="self-stretch justify-center items-center gap-2.5 inline-flex">
+              <div className="justify-start items-center gap-1 flex">
+                <Link
+                  to="#"
+                  className="text-center text-gray-900 text-xs font-medium leading-[18px] hover:text-light-blue-400"
+                >
+                  View league
+                </Link>
+              </div>
+              <div className="px-3 py-2 bg-white rounded-lg border border-gray-300 hover:border-light-blue-400 justify-center items-center gap-2 flex group cursor-pointer">
+                <button
+                  type="submit"
+                  className="group-hover:text-light-blue-400 text-center text-slate-700 text-xs font-medium leading-[18px]"
+                  onClick={handleSkip}
+                >
+                  Skip choice
+                </button>
+              </div>
             </div>
-            <div className="px-3 py-2 bg-white rounded-lg border border-gray-300 hover:border-light-blue-400 justify-center items-center gap-2 flex group cursor-pointer">
-              <button
-                type="submit"
-                className="group-hover:text-light-blue-400 text-center text-slate-700 text-xs font-medium leading-[18px]"
-                onClick={handleVote}
-              >
-                Skip choice
-              </button>
-            </div>
-          </div>
-        </div>
+          </div>          
+        )}
       </div>
       {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}
     </div>

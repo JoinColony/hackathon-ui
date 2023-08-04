@@ -4,15 +4,17 @@ import ProjectCard from 'components/ProjectCard';
 import { SyntheticEvent, useState } from 'react';
 
 interface ColonyPoolCardProps {
-  handleClick: (event: SyntheticEvent) => void;
+  handleClick: (event: SyntheticEvent, projectId: number) => void;
   title: string;
   subtitle: string;
+  projectId: number;
 }
 
 const ColonyPoolCard = ({
   handleClick,
   title,
   subtitle,
+  projectId
 }: ColonyPoolCardProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -78,7 +80,7 @@ const ColonyPoolCard = ({
   return (
     <div
       className="group grow shrink basis-0 h-full p-6 bg-white rounded-lg border border-gray-200 justify-between items-center gap-6 flex hover:bg-blue-100 hover:border-light-blue-400 relative"
-      onClick={handleClick}
+      onClick={(e) => handleClick(e, projectId)}
     >
       <div className="grow shrink basis-0 flex-col justify-start items-center gap-6 inline-flex">
         <ProjectCard title={title} subtitle={subtitle} />
@@ -95,7 +97,7 @@ const ColonyPoolCard = ({
           items={dropdownItems}
         >
           <button type="button" className="relative z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="1"></circle>
               <circle cx="12" cy="5" r="1"></circle>
               <circle cx="12" cy="19" r="1"></circle>
