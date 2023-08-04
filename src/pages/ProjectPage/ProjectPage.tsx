@@ -44,7 +44,9 @@ const ProjectPage = () => {
     <div className="w-full flex justify-center p-24 pt-12 pb-12">
       <div className="flex flex-col gap-6 p-6 pt-11 max-w-7xl rounded-lg shadow border border-gray-200 bg-white w-full">
         <div className="flex items-start gap-6">
-          <CircleComponent name={projectTitle} />
+          <div className="w-32 h-32">
+            <CircleComponent name={projectTitle} />
+          </div>
           <div className="flex flex-col gap-2">
             <h1 className="text-gray-900 text-3xl font-semibold leading-[38px]">{projectTitle}</h1>
             {projectDescription  && <p className="text-slate-600 text-base font-normal leading-normal">{projectDescription}</p>}
