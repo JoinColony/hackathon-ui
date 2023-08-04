@@ -55,7 +55,7 @@ const Navbar = () => {
           <div className="hidden md:flex flex-row items-center justify-start gap-2 text-base text-light-gray-900">
             <NavLink label="Vote" href="/vote" isHighlighted={true} />
             <NavLink label="Promote" href="/promote" />
-            <NavLink label="Leagues" href="/league" />
+            <NavLink label="Leagues" href="/all-leagues" />
           </div>
         </div>
         <div className="flex flex-row items-center justify-start gap-4 text-center text-xs text-light-base-white">
