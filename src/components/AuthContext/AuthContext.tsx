@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import useApi from 'hooks/useApi';
+import { getAddress } from 'ethers';
 
 interface AuthContextType {
   loggedIn: boolean;
@@ -33,7 +34,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     const profile = localStorage.getItem('profile');
     if (address) {
       setLoggedIn(true);
-      setAddress(address);
+      setAddress(getAddress(address));
       setProfile(profile);
     }
   }, []);
@@ -76,7 +77,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
         localStorage.setItem('address', address);
         localStorage.setItem('profile', profile);
         setLoggedIn(true);
-        setAddress(address);
+        setAddress(getAddress(address));
         setProfile(profile);
       }
     };
