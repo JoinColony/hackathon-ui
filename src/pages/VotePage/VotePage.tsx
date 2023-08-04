@@ -158,7 +158,7 @@ const VotePage = () => {
                     <ColonyPoolCard
                       key={project.id}
                       projectId={project.id}
-                      handleClick={handleVote}
+                      onClick={handleVote}
                       title={projectTitle}
                       subtitle={projectDescription}
                       lastUpdated={lastUpdate?.timestamp || 1000000000000}
@@ -189,7 +189,7 @@ const VotePage = () => {
           </div>
         )}
       </div>
-      {isModalOpen && <LoginModal handleClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };

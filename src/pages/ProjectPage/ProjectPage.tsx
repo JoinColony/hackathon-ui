@@ -141,8 +141,8 @@ const ProjectPage = () => {
       )}
       {isModalOpen && (
         <Modal
-          handleClose={() => setIsModalOpen(false)}
-          handleSubmit={handleSubmit}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleSubmit}
           headingText="Update"
           subHeadingText="Provide an update to the community about your project"
           submitButtonText="Update"

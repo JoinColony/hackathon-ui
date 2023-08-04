@@ -115,7 +115,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {isModalOpen && <LoginModal handleClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };

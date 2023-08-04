@@ -3,17 +3,17 @@ import { FaTimes } from 'react-icons/fa';
 interface ModalProps {
   headingText: string;
   subHeadingText: string;
-  handleClose: () => void;
+  onClose: () => void;
   form: React.ReactNode;
   submitButtonText: string;
-  handleSubmit: () => void;
+  onSubmit: () => void;
 }
 const Modal = ({
   headingText,
   subHeadingText,
-  handleClose,
+  onClose,
   form,
-  handleSubmit,
+  onSubmit,
   submitButtonText,
 }: ModalProps) => {
   return (
@@ -34,7 +34,7 @@ const Modal = ({
             </div>
           </div>
           <button
-            onClick={handleClose}
+            onClick={onClose}
             className="my-0 mx-auto absolute top-[16px] right-[16px] rounded-lg overflow-hidden flex flex-row p-2.5 items-center justify-center z-[1]"
           >
             <FaTimes className="relative w-[18px] h-[18px] text-[#98A2B3]" />
@@ -53,13 +53,13 @@ const Modal = ({
         </div>
         <div className="self-stretch flex flex-row pt-8 px-6 pb-6 items-start justify-start gap-[12px]">
           <button
-            onClick={handleClose}
+            onClick={onClose}
             className="flex-1 rounded-lg bg-white flex flex-row py-2.5 px-4 items-center justify-center border-[1px] border-solid border-light-gray-100 text-black focus:outline-none"
           >
             Cancel
           </button>
           <button
-            onClick={handleSubmit}
+            onClick={onSubmit}
             className="flex-1 rounded-lg bg-blue-600 flex flex-row py-2.5 px-4 items-center justify-center text-white focus:outline-none"
           >
             {submitButtonText}
