@@ -14,14 +14,22 @@ const LoginModal: FC<LoginModalProps> = ({ onClose }) => {
   const { logIn } = useContext(AuthContext);
 
   useEffect(() => {
-    // @ts-ignore
-    if (window?.ethereum?.isConnected()) {
-      // @ts-ignore
-      window.ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {
-        const [account] = accounts;
+    const handleRawMetamask = async () => {
+      try {
+        // @ts-ignore
+        if (window?.ethereum?.isConnected()) {
+          // @ts-ignore
+          const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          setAddressInput(getAddress(account));
+        }
+      } catch (error) {
+        // @ts-ignore
+        const [{ caveats }] = await window.ethereum.request({ method: 'wallet_requestPermissions', params: [{ eth_accounts: {} }] });
+        const [account] = caveats[0].value;
         setAddressInput(getAddress(account));
-      });
+      }
     }
+    handleRawMetamask();
   }, [setAddressInput]);
 
   const handleLogin = () => {
